@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { signUp } from '../../store/session';
 
 import './authForm.css'
@@ -15,11 +15,13 @@ const SignUpForm = () => {
   const [profile_pic, setProfilePic] = useState('');
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
-
+  
   const onSignUp = async (e) => {
     e.preventDefault();
-    if (password === repeatPassword) {
-      console.log('ON SUBMIT', profile_pic)
+
+    if (password !== repeatPassword) {
+      setErrors(['Passwords Must Match'])
+    } else {
       const data = await dispatch(signUp(firstName, lastName, email, password, profile_pic));
       if (data) {
         setErrors(data)
@@ -115,6 +117,9 @@ const SignUpForm = () => {
         ></input>
       </div>
       <button type='submit'>Sign Up</button>
+      <div className='switch-auth'>
+        Already have an account? <NavLink to='/login'>Login</NavLink>
+      </div>
     </form>
   );
 };

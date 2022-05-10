@@ -66,7 +66,7 @@ const NavBar = () => {
   } else {
     return (
       <header>
-        <nav>
+        <div>
           <NavLink to='/' exact={true} activeClassName='active'>
             Home
           </NavLink>
@@ -74,7 +74,7 @@ const NavBar = () => {
             SearchBar Goes Here
           </div>
           <LogoutButton />
-        </nav>
+        </div>
       </header>
     );
   }

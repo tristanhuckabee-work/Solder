@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { login } from '../../store/session';
 
 const LoginForm = () => {
@@ -14,14 +14,17 @@ const LoginForm = () => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      setErrors(data);
+      setErrors(['Invalid Credentials']);
     }
   };
+  const demoLogin = async e => {
+    e.preventDefault();
+    return await dispatch(login('demo@aa.io', 'password'))
+  }
 
   const updateEmail = (e) => {
     setEmail(e.target.value);
   };
-
   const updatePassword = (e) => {
     setPassword(e.target.value);
   };
@@ -57,6 +60,10 @@ const LoginForm = () => {
         />
       </div>
       <button type='submit'>Login</button>
+      <button onClick={demoLogin}>Demo Login</button>
+      <div className='switch-auth'>
+        Don't have an account? <NavLink to='/sign-up'>Sign-Up</NavLink>
+      </div>
     </form>
   );
 };
