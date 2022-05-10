@@ -1,0 +1,31 @@
+header {
+  background-color: #202020;
+  color: #eeeeee;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  padding: 10px 20%;
+}
+nav {
+  color: #eeeeee;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+header div {
+  background-color: #eeeeee;
+  color: #aaaaaa;
+  padding: 0 15px;
+  width: 100%;
+  height: 30px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+header a {
+  text-decoration: none;
+  color: #eeeeee;
+}
+header a:hover {
+  color: #ffbd00;
+}

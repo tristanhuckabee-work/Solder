@@ -1,38 +1,60 @@
 
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+
+import { login } from '../store/session';
+
 import LogoutButton from './auth/LogoutButton';
 
+import './NavBar.css'
+
 const NavBar = () => {
-  return (
-    <nav>
-      <ul>
-        <li>
+  const dispatch = useDispatch();
+  const user = useSelector( state => state.session.user )
+
+  const demoUser = async e => {
+    e.preventDefault();
+    return await dispatch(login('demo@aa.io', 'password'))
+  }
+
+  if (user === null) {
+    return (
+      <header>
+        <nav>
           <NavLink to='/' exact={true} activeClassName='active'>
             Home
           </NavLink>
-        </li>
-        <li>
+          <NavLink to='/' exact={true} activeClassName='active' onClick={demoUser}>
+            Demo
+          </NavLink>
           <NavLink to='/login' exact={true} activeClassName='active'>
             Login
           </NavLink>
-        </li>
-        <li>
-          <NavLink to='/sign-up' exact={true} activeClassName='active'>
-            Sign Up
+          <NavLink to='sign-up' exact={true} activeClassName='active'>
+            Sign-up
           </NavLink>
-        </li>
-        <li>
-          <NavLink to='/users' exact={true} activeClassName='active'>
-            Users
+        </nav>
+        <div className='search'>
+          Searchbar Goes Here
+        </div>
+      </header>
+    );
+  } else {
+    return (
+      <header>
+        <nav>
+          <NavLink to='/' exact={true} activeClassName='active'>
+            Home
           </NavLink>
-        </li>
-        <li>
+          <div className='search'>
+            SearchBar Goes Here
+          </div>
           <LogoutButton />
-        </li>
-      </ul>
-    </nav>
-  );
+        </nav>
+      </header>
+    );
+  }
 }
 
 export default NavBar;
