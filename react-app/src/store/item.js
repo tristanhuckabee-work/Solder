@@ -3,16 +3,20 @@ const ITEMS  = 'items'
 const UPDATE = 'items/update'
 const DELETE = 'items/delete'
 
-const createItem = payload => { type: CREATE, payload}
-const getItems   = payload => { type: CREATE, payload}
-const updateItem = payload => { type: CREATE, payload}
-const deleteItem = payload => { type: CREATE, payload}
+const createItem = payload => ({ type: CREATE, payload})
+const getItems   = payload => ({ type: ITEMS, payload})
+const updateItem = payload => ({ type: UPDATE, payload})
+const deleteItem = payload => ({ type: DELETE, payload})
 
 export const newItem = item => async dispatch => {
   return null;
 }
 export const getAllItems = () => async dispatch => {
-  return null;
+  const res = await fetch('/api/items/');
+  const data = await res.json();
+  console.log(data)
+
+  dispatch( getItems( data ) );
 }
 export const editItem = item => async dispatch => {
   return null;
@@ -28,16 +32,21 @@ const ItemReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case CREATE:
-
+      return state;
     case ITEMS:
+      newState = { ...state, ...action.payload}
+      action.payload.items.forEach(item => {
+        newState[item.id] = item
+      })
 
+      return newState;
     case UPDATE:
-
+      return state;
     case DELETE:
-
+      return state;
     default:
       return state;
   }
 }
 
-export default ServerReducer;
+export default ItemReducer;

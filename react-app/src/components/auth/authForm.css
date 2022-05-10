@@ -55,6 +55,8 @@ form button:hover {
 .switch-auth a:hover {
   color : blue;
 }
+.logout { cursor: pointer }
+.logout:hover { color:#ffbd00 }
 
 
 @media screen and (max-width: 1000px) {
