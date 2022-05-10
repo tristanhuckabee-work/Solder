@@ -21,21 +21,44 @@ const NavBar = () => {
   if (user === null) {
     return (
       <header>
-        <nav>
-          <NavLink to='/' exact={true} activeClassName='active'>
-            Home
+        <div>
+          <NavLink
+            to='/'
+            exact={true}
+            activeClassName='active'
+          >
+            SOLDER
           </NavLink>
-          <NavLink to='/' exact={true} activeClassName='active' onClick={demoUser}>
-            Demo
-          </NavLink>
-          <NavLink to='/login' exact={true} activeClassName='active'>
-            Login
-          </NavLink>
-          <NavLink to='sign-up' exact={true} activeClassName='active'>
-            Sign-up
-          </NavLink>
-        </nav>
+          <div className='login-signup'>
+            <NavLink
+              to='/'
+              exact={true}
+              activeClassName='active'
+              className='login'
+              onClick={demoUser}
+            >
+              Demo
+            </NavLink>
+            <NavLink
+              to='/login'
+              exact={true}
+              className='login'
+              activeClassName='active'
+              >
+              Login
+            </NavLink>
+            <NavLink
+              to='sign-up'
+              exact={true}
+              className='signup'
+              activeClassName='active'
+              >
+              Sign-up
+            </NavLink>
+          </div>
+        </div>
         <div className='search'>
+          <i className='fas fa-magnifying-glass' />
           Searchbar Goes Here
         </div>
       </header>
