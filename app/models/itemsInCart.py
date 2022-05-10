@@ -5,8 +5,8 @@ class ItemsInCart(db.Model):
   __tablename__ = 'itemsInCart'
 
   id = db.Column(db.Integer, primary_key=True)
-  item_id = db.Column(db.Integer, db.ForeignKey('item.id'), nullable=False)
-  cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'), nullable=False)
+  item_id = db.Column(db.Integer, db.ForeignKey('items.id'), nullable=False)
+  cart_id = db.Column(db.Integer, db.ForeignKey('carts.id'), nullable=False)
 
   item = db.relationship('Item', back_populates='itemInCart')
   cart = db.relationship('Cart', back_populates='items')

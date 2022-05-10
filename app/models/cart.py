@@ -5,7 +5,7 @@ class Cart(db.Model):
   __tablename__ = 'carts'
 
   id = db.Column(db.Integer, primary_key=True)
-  owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+  owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
   user = db.relationship('User', back_populates='cart')
   items = db.relationship('ItemsInCart', back_populates='cart')

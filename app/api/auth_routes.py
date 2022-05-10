@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import db, User, Cart
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -62,13 +62,23 @@ def sign_up():
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        default_pic = 'https://res.cloudinary.com/dzsgront4/image/upload/v1652205992/IT000012498930-e1426124271973_eypgul.jpg'
+        
         user = User(
-            username=form.data['username'],
+            firstName = form.data['firstName'],
+            lastName = form.data['lastName'],
             email=form.data['email'],
-            password=form.data['password']
+            password=form.data['password'],
+            profilePic=form.data['profilePic'] or default_pic
         )
         db.session.add(user)
         db.session.commit()
+
+        cart = Cart(owner_id=user.id)
+
+        db.session.add(cart)
+        db.session.commit()
+
         login_user(user)
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401

@@ -5,7 +5,7 @@ class Item(db.Model):
   __tablename__ = 'items'
 
   id = db.Column(db.Integer, primary_key=True)
-  seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+  seller_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   name = db.Column(db.String, nullable=False)
   description = db.Column(db.String)
   price = db.Column(db.String(10), nullable=False)
