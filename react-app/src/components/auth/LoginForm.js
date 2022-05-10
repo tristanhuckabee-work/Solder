@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { login } from '../../store/session';
 
 const LoginForm = () => {
@@ -14,14 +14,17 @@ const LoginForm = () => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      setErrors(data);
+      setErrors(['Invalid Credentials']);
     }
   };
+  const demoLogin = async e => {
+    e.preventDefault();
+    return await dispatch(login('demo@aa.io', 'password'))
+  }
 
   const updateEmail = (e) => {
     setEmail(e.target.value);
   };
-
   const updatePassword = (e) => {
     setPassword(e.target.value);
   };
@@ -32,13 +35,13 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={onLogin}>
-      <div>
+      <h2>Login</h2>
+      <div className='errors'>
         {errors.map((error, ind) => (
           <div key={ind}>{error}</div>
         ))}
       </div>
       <div>
-        <label htmlFor='email'>Email</label>
         <input
           name='email'
           type='text'
@@ -48,7 +51,6 @@ const LoginForm = () => {
         />
       </div>
       <div>
-        <label htmlFor='password'>Password</label>
         <input
           name='password'
           type='password'
@@ -56,7 +58,11 @@ const LoginForm = () => {
           value={password}
           onChange={updatePassword}
         />
-        <button type='submit'>Login</button>
+      </div>
+      <button type='submit'>Login</button>
+      <button onClick={demoLogin}>Demo Login</button>
+      <div className='switch-auth'>
+        Don't have an account? <NavLink to='/sign-up'>Sign-Up</NavLink>
       </div>
     </form>
   );

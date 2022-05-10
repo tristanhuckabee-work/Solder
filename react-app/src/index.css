@@ -1,1 +1,8 @@
-/* TODO Add site wide styles */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+
+body {
+  background-color: #eeeeee;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Raleway', sans-serif;
+}
