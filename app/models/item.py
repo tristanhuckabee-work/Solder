@@ -16,9 +16,10 @@ class Item(db.Model):
 
   def to_dict(self):
     return {
+      'id': self.id,
       'seller_id': self.seller_id,
       'name': self.name,
       'description': self.description,
       'price': self.price,
-      'pics': self.price.split(',')
+      'pics': self.pics.split(',')
     }

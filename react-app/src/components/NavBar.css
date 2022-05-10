@@ -2,16 +2,23 @@ header {
   background-color: #202020;
   color: #eeeeee;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 50px 30px;
   padding: 10px 20%;
 }
 header div {
   padding: 0 15px;
   width: 100%;
-  height: 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+header .options{
+  width: auto;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid transparent;
 }
 header a {
   text-decoration: none;
@@ -40,4 +47,16 @@ header a:hover {
 .signup:hover {
   background-color: #eeeeee;
   color: #202020;
+}
+.userLink {
+  background-color: red;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  border: 1px solid transparent;
+}
+.userLink:hover {
+  border: 1px solid #ffbd00;
 }

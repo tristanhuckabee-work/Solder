@@ -73,7 +73,16 @@ const NavBar = () => {
           <div className='search'>
             SearchBar Goes Here
           </div>
-          <LogoutButton />
+          <div className='options'>
+            <NavLink
+              to='/'
+              exact={true}
+              activeClassName='active'
+              className='userLink'
+              style={{ backgroundImage: `url(${user.profilePic})` }}
+            />
+            <LogoutButton />
+          </div>
         </div>
       </header>
     );

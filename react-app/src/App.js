@@ -11,6 +11,7 @@ import MainSplash from './components/Main/Main';
 import NavBar from './components/NavBar';
 
 import { authenticate } from './store/session';
+import { getAllItems } from './store/item';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -22,7 +23,9 @@ function App() {
       setLoaded(true);
     })();
   }, [dispatch]);
-
+  useEffect(() => {
+    dispatch(getAllItems());
+  }, [dispatch])
   if (!loaded) {
     return null;
   }

@@ -1,11 +1,50 @@
-main {
-  background-color: red;
-  margin: 0 20%;
-  padding: 0 10px;
+main { margin: 10px 20% }
+
+.splash-create {
+  background-color: blue;
+  background-image: url('https://res.cloudinary.com/dzsgront4/image/upload/v1652205992/IT000012498930-e1426124271973_eypgul.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 10px;
+  color: #eeeeee;
+  height: 175px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.splash-create h2 {
+  background-color: #00000088;
+  border-radius: 3px;
+  padding: 2px 10px;
+}
+.splash-create button{
+  background-color: #ffbd0088;
+  font-size: 20px;
+  padding: 5px 15px;
+  border: 2px solid #eeeeee;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+.splash-create button:hover {
+  background-color: #00000088;
+  color: #eeeeee;
+}
+.splash-items {
+  margin-top: 20px;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
 }
 
 @media screen and (max-width: 1000px) {
   main {
     margin: 0;
+  }
+  .splash-create {
+    border-radius: 0;
   }
 }
