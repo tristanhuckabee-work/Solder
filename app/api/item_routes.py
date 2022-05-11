@@ -3,7 +3,29 @@ from flask_login import login_required
 from app.models import Item, User, Cart, ItemsInCart, db
 from app.forms import CreateItemForm
 
+from app.s3config import ( upload_file_to_s3, allowed_file, get_unique_filename )
+
 item_routes = Blueprint('items', __name__)
+
+
+@item_routes.route('/images', methods=['POST'])
+@login_required
+def upload_image():
+  if "image" not in request.files:
+    return {"errors": "image required"}, 400
+  image = request.files["image"]
+
+  if not allowed_file(image.filename):
+    return {"errors": "file type not permitted"}, 400
+  image.filename = get_unique_filename(image.filename)
+
+  upload = upload_file_to_s3(image)
+
+  if "url" not in upload:
+    return upload, 400
+  url = upload["url"]
+  
+  return {'url': url}
 
 @item_routes.route('/new', methods=['POST'])
 @login_required
@@ -16,7 +38,8 @@ def createItem():
       seller_id = data['owner_id'],
       name = data['name'],
       description = data['description'],
-      price = f"${data['price']}"
+      price = f"${data['price']}",
+      pics = data['pics']
     )
     db.session.add(item)
     db.session.commit()
@@ -29,9 +52,6 @@ def createItem():
 @login_required
 def getAllItem():
   items = Item.query.all()
-  for item in items:
-    print(f'\n\n{item.to_dict()}')
-  
   return {'items': [item.to_dict() for item in items]}
 
 @item_routes.route('/<int:id>/edit', methods=['PATCH'])
