@@ -9,13 +9,26 @@ const updateItem = payload => ({ type: UPDATE, payload})
 const deleteItem = payload => ({ type: DELETE, payload})
 
 export const newItem = item => async dispatch => {
-  return null;
+  console.log('NEW ITEM', item);
+  const res = await fetch(`/api/items/new`, {
+    method: 'POST',
+    body: JSON.stringify(item),
+    headers: {'Content-Type':'application/json'}
+  });
+  const data = await res.json();
+  console.log('DATA:', data)
+
+  dispatch( createItem( data ) );
+  return data;
 }
 export const getAllItems = () => async dispatch => {
   const res = await fetch('/api/items/');
   const data = await res.json();
-  console.log(data)
-
+  console.log('data:', data.items);
+  data.items.forEach(item => {
+    console.log('item:', typeof item)
+    if ( !Array.isArray(item.pics) ) item.pics = item.pics.split(',')
+  });
   dispatch( getItems( data ) );
 }
 export const editItem = item => async dispatch => {
@@ -35,10 +48,10 @@ const ItemReducer = (state = initialState, action) => {
       return state;
     case ITEMS:
       newState = { ...state, ...action.payload}
-      action.payload.items.forEach(item => {
+      action.payload.items?.forEach(item => {
         newState[item.id] = item
       })
-
+        
       return newState;
     case UPDATE:
       return state;

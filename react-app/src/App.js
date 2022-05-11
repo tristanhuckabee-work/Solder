@@ -3,15 +3,13 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import ProtectedRoute from './components/auth/ProtectedRoute';
-import UsersList from './components/UsersList';
-import User from './components/User';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import MainSplash from './components/Main/Main';
 import NavBar from './components/NavBar';
+import CreateItemForm from './components/createItemForm/createItemForm'
 
 import { authenticate } from './store/session';
-import { getAllItems } from './store/item';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -23,9 +21,7 @@ function App() {
       setLoaded(true);
     })();
   }, [dispatch]);
-  useEffect(() => {
-    dispatch(getAllItems());
-  }, [dispatch])
+  
   if (!loaded) {
     return null;
   }
@@ -40,12 +36,9 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path='/users' exact={true} >
-          <UsersList/>
-        </ProtectedRoute>
-        <ProtectedRoute path='/users/:userId' exact={true} >
-          <User />
-        </ProtectedRoute>
+        <Route path='/items/new' exact={true}>
+          <CreateItemForm />
+        </Route>
         <ProtectedRoute path='/' exact={true} >
           <MainSplash />
         </ProtectedRoute>

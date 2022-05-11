@@ -15,11 +15,17 @@ class Item(db.Model):
   itemInCart = db.relationship('ItemsInCart', back_populates='item')
 
   def to_dict(self):
+    pictures = ['']
+    if self.pics is None:
+      pictures = ['https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg']
+    else:
+      pictures = self.pics
+
     return {
       'id': self.id,
       'seller_id': self.seller_id,
       'name': self.name,
       'description': self.description,
       'price': self.price,
-      'pics': self.pics.split(',')
+      'pics': pictures
     }
