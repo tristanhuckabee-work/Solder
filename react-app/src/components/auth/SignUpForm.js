@@ -29,24 +29,12 @@ const SignUpForm = () => {
     }
   };
 
-  const updateFirstName = (e) => {
-    setFirstName(e.target.value);
-  };
-  const updateLastName = (e) => {
-    setLastName(e.target.value);
-  }
-  const updateEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const updatePassword = (e) => {
-    setPassword(e.target.value);
-  };
-  const updateRepeatPassword = (e) => {
-    setRepeatPassword(e.target.value);
-  };
-  const updateProfilePic = (e) => {
-    setProfilePic(e.target.value);
-  }
+  const updateFirstName = (e) => setFirstName(e.target.value);
+  const updateLastName = (e) => setLastName(e.target.value);
+  const updateEmail = (e) => setEmail(e.target.value);
+  const updatePassword = (e) => setPassword(e.target.value);
+  const updateRepeatPassword = (e) => setRepeatPassword(e.target.value);
+  const updateProfilePic = (e) => setProfilePic(e.target.value);
 
   if (user) {
     return <Redirect to='/' />;

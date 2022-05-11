@@ -47,4 +47,7 @@ main { margin: 10px 20% }
   .splash-create {
     border-radius: 0;
   }
+  .splash-items {
+    grid-template-columns: 1fr;
+  }
 }

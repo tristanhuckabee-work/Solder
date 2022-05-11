@@ -1,13 +1,22 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
 import ItemCard from '../itemCard/itemCard';
+
+import { getAllItems } from '../../store/item';
 
 import './Main.css'
 
 const MainSplash = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const items = useSelector(state => state.items.items)
+  
+  useEffect(() => {
+    dispatch(getAllItems());
+  }, [dispatch])
+  
   const createItem = () => {
     history.push('/items/new')
   };

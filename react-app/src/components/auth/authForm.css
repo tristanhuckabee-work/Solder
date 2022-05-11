@@ -15,13 +15,17 @@ form div {
   align-items: center;
   margin:10px 0;
 }
-form div input {
+form div input, textarea {
   width: 100%;
   padding: 5px 13px;
   border: 1px solid transparent;
   border-radius: 13px;
   background-color: #202020;
   color: #eeeeee;
+}
+form div textarea {
+  height: 300px;
+  overflow: none;
 }
 form div input:focus {
   outline-color: #ffbd00;
