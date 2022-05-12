@@ -22,6 +22,7 @@ export const newItem = item => async dispatch => {
 export const getAllItems = () => async dispatch => {
   const res = await fetch('/api/items/');
   const data = await res.json();
+  console.log('DATA', data)
   data.items.forEach(item => {
     if ( !Array.isArray(item.pics) ) item.pics = item.pics.split(',')
   });

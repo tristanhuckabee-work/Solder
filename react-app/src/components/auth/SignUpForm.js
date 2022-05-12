@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Redirect, NavLink } from 'react-router-dom';
+import { Redirect, NavLink, useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
 
 import './authForm.css'
 
 const SignUpForm = () => {
+  const history = useHistory()
   const [errors, setErrors] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -26,6 +27,7 @@ const SignUpForm = () => {
       if (data) {
         setErrors(data)
       }
+      history.push('/');
     }
   };
 
@@ -105,9 +107,6 @@ const SignUpForm = () => {
         ></input>
       </div>
       <button type='submit'>Sign Up</button>
-      <div className='switch-auth'>
-        Already have an account? <NavLink to='/login'>Login</NavLink>
-      </div>
     </form>
   );
 };

@@ -12,18 +12,19 @@ import CreateItemForm from './components/createItemForm/createItemForm'
 import EditItemForm from './components/editItemForm/editItemForm';
 
 import { authenticate } from './store/session';
+import { getAllItems } from './store/item';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       await dispatch(authenticate());
       setLoaded(true);
     })();
   }, [dispatch]);
-  
+
   if (!loaded) {
     return null;
   }
@@ -32,11 +33,9 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Switch>
-        <Route path='/login' exact={true}>
-          <LoginForm />
-        </Route>
-        <Route path='/sign-up' exact={true}>
-          <SignUpForm />
+        <Route path='/home' exact={true}>
+          <MainSplash />
+          {/* <LoginForm /> */}
         </Route>
         <Route path='/items/new' exact={true}>
           <CreateItemForm />

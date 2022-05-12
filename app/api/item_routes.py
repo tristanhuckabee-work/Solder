@@ -50,7 +50,6 @@ def createItem():
     return { 'errors': errors }
 
 @item_routes.route('/')
-@login_required
 def getAllItem():
   items = Item.query.all()
   return {'items': [item.to_dict() for item in items]}

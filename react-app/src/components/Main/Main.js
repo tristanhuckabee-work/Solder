@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import ItemCard from '../itemCard/itemCard';
+import Popup from 'reactjs-popup';
+import SignUpForm from '../auth/SignUpForm';
 
 import { getAllItems } from '../../store/item';
 
@@ -11,21 +13,31 @@ import './Main.css'
 const MainSplash = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const items = useSelector(state => state.items.items)
-  
+  const user = useSelector(state => state.session.user);
+  const items = useSelector(state => state.items.items);
+
   useEffect(() => {
     dispatch(getAllItems());
   }, [dispatch])
-  
-  const createItem = () => {
-    history.push('/items/new')
-  };
+
+  const createItem = () => history.push('/items/new');
 
   return (
     <main>
       <div className='splash-create'>
         <h2>Got Something to Sell?</h2>
-        <button onClick={createItem}>Sell Now</button>
+        {user && (
+          <button onClick={createItem}>Sell Now</button>
+        ) || (
+          <Popup
+            trigger={<button> Signup </button>}
+            className='signup'
+            modal
+          >
+            <SignUpForm />
+          </Popup>
+        )
+        }
       </div>
       <div className='splash-items'>
         {items.map(item => {
