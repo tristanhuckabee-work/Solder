@@ -1,11 +1,20 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 import './itemCard.css';
 
 const ItemCard = ({ item }) => {
-  return (
+  const history = useHistory();
 
-    <div className='item-card'>
+  const onClick = () => {
+    history.push(`/items/${item.id}`)
+  }
+
+  return (
+    <div
+      className='item-card'
+      onClick={onClick}
+    >
       <div className='item-info'>
         <p>{item.name}</p>
         <p>{item.price}</p>
