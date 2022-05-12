@@ -23,15 +23,16 @@ const EditItemForm = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    const item = {
-      owner_id: user.id,
+    const editedItem = {
+      id: item.id,
       name,
       description,
       price,
-      pics: pics || 'https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg'
+      pics: pics || defaultImage
     }
 
-    const edited = await dispatch(editItem(item));
+    const edited = await dispatch(editItem(editedItem));
+    console.log('EDITED:', edited);
     if (edited?.errors) {
       setErrors(edited.errors);
     } else {

@@ -1,5 +1,5 @@
-
 import React from 'react';
+import Popup from 'reactjs-popup';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
@@ -29,6 +29,13 @@ const NavBar = () => {
           >
             SOLDER
           </NavLink>
+
+
+          <Popup trigger={ <button> Trigger </button> } position='center'>
+            <div>Popup Content Here!!</div>
+          </Popup>
+          
+          
           <div className='login-signup'>
             <NavLink
               to='/'

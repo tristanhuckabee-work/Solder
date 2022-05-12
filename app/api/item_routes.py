@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
 from app.models import Item, User, Cart, ItemsInCart, db
-from app.forms import CreateItemForm
+from app.forms import CreateItemForm, EditItemForm
 
 from app.s3config import ( upload_file_to_s3, allowed_file, get_unique_filename )
 
@@ -57,8 +57,26 @@ def getAllItem():
 
 @item_routes.route('/<int:id>/edit', methods=['PATCH'])
 @login_required
-def updateItem():
-  return 'update'
+def updateItem(id):
+  # form = EditItemForm()
+  data = request.get_json(force=True)
+  print(f'\n\n{data}\n\n')
+
+  # form['csrf_token'].data = request.cookies['csrf_token']
+  # if form.validate_on_submit():
+  item = Item.query.get(id)
+
+  item.name = data['name']
+  item.description = data['description']
+  item.price = f"${data['price']}"
+  item.pics = data['pics']
+
+  db.session.commit()
+
+  return item.to_dict()
+  # else:
+  #   errors = [form.errors[error] for error in form.errors]
+  #   return { 'errors': errors }
 
 @item_routes.route('/<int:id>/delete', methods=['DELETE'])
 @login_required

@@ -27,8 +27,17 @@ export const getAllItems = () => async dispatch => {
   });
   dispatch( getItems( data ) );
 }
-export const editItem = item => async dispatch => {
-  return null;
+export const editItem = (item) => async dispatch => {
+  console.log('INSIDE EDIT:', item);
+  const res = await fetch(`/api/items/${item.id}/edit`, {
+    method: 'PATCH',
+    body: JSON.stringify(item),
+    heades: {'Content-Type':'application.json'}
+  });
+  const data = await res.json();
+
+  dispatch( updateItem( data ) );
+  return data;
 }
 export const delItem = id => async dispatch => {
   return null;
@@ -41,6 +50,9 @@ const ItemReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case CREATE:
+      newState = { ...state };
+      console.log('\n\n\n', newState);
+      console.log('\n', action.payload)
       return state;
     case ITEMS:
       newState = { ...state, ...action.payload}
@@ -50,7 +62,9 @@ const ItemReducer = (state = initialState, action) => {
         
       return newState;
     case UPDATE:
-      return state;
+      newState ={ ...state }
+      console.log('\n\n\n\n', newState)
+      console.log('\n', action.payload)
     case DELETE:
       return state;
     default:
