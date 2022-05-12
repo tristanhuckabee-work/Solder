@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect, NavLink } from 'react-router-dom';
+import { Redirect, NavLink, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
 
 const LoginForm = () => {
+  const history = useHistory()
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,6 +17,7 @@ const LoginForm = () => {
     if (data) {
       setErrors(['Invalid Credentials']);
     }
+    history.push('/')
   };
   const demoLogin = async e => {
     e.preventDefault();
@@ -61,9 +63,6 @@ const LoginForm = () => {
       </div>
       <button type='submit'>Login</button>
       <button onClick={demoLogin}>Demo Login</button>
-      <div className='switch-auth'>
-        Don't have an account? <NavLink to='/sign-up'>Sign-Up</NavLink>
-      </div>
     </form>
   );
 };

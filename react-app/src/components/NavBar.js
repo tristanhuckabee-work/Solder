@@ -1,21 +1,24 @@
-
 import React from 'react';
+import Popup from 'reactjs-popup';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-
+import { NavLink, useHistory } from 'react-router-dom';
 import { login } from '../store/session';
 
 import LogoutButton from './auth/LogoutButton';
+import LoginForm from './auth/LoginForm';
+import SignUpForm from './auth/SignUpForm';
 
 import './NavBar.css'
 
 const NavBar = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector( state => state.session.user )
+  const user = useSelector(state => state.session.user)
 
   const demoUser = async e => {
     e.preventDefault();
-    return await dispatch(login('demo@aa.io', 'password'))
+    await dispatch(login('demo@aa.io', 'password'));
+    history.push('/');
   }
 
   if (user === null) {
@@ -30,16 +33,22 @@ const NavBar = () => {
             SOLDER
           </NavLink>
           <div className='login-signup'>
-            <NavLink
-              to='/'
-              exact={true}
-              activeClassName='active'
+            <button onClick={demoUser}>Demo</button>
+            <Popup
+              trigger={<button> Login </button>}
               className='login'
-              onClick={demoUser}
+              modal
             >
-              Demo
-            </NavLink>
-            <NavLink
+              <LoginForm />
+            </Popup>
+            <Popup
+              trigger={<button> Signup </button>}
+              className='signup'
+              modal
+            >
+              <SignUpForm />
+            </Popup>
+            {/* <NavLink
               to='/login'
               exact={true}
               className='login'
@@ -54,7 +63,7 @@ const NavBar = () => {
               activeClassName='active'
               >
               Sign-up
-            </NavLink>
+            </NavLink> */}
           </div>
         </div>
         <div className='search'>

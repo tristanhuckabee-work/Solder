@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Email, ValidationError, URL, Option
 from app.models import Item
 
 
-class CreateItemForm(FlaskForm):
+class EditItemForm(FlaskForm):
   name = StringField('name', validators=[DataRequired(message='Name is Required')])
   description = StringField('description', validators=[DataRequired(message='Description is Required')])
   price = StringField('price', validators=[DataRequired(message='Price is Required')])

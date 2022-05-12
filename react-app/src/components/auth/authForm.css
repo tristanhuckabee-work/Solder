@@ -1,6 +1,6 @@
 form {
-  background-color: #ffffff;
-  margin: 50px 40%;
+  background-color: var(--true-white);
+  margin: 0;
   border-radius: 5px;
   padding: 0 10px 10px 10px;
   display: flex;
