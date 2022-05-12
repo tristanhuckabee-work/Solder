@@ -30,7 +30,10 @@ const MainSplash = () => {
       <div className='splash-items'>
         {items.map(item => {
           return (
-            <ItemCard key={item.id} item={item}/>
+            <ItemCard
+              key={item.id}
+              item={item}
+            />
           )
         })}
       </div>
