@@ -46,7 +46,8 @@ def createItem():
 
     return item.to_dict()
   else:
-    return { 'errors': form.errors }
+    errors = [form.errors[error] for error in form.errors]
+    return { 'errors': errors }
 
 @item_routes.route('/')
 @login_required

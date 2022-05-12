@@ -4,10 +4,15 @@
   grid-gap: 5px;
   padding: 15px 15%;
 }
-.item-page-images-review, .item-page-info {
-  background-color: #ffffff;
+.item-page-images-review, .item-page-info, .item-page-reviews {
+  background-color: var(--true-white);
   border-radius: 10px;
   padding: 5px;
+}
+/* FORMS */
+.item-page form {
+  margin: 0;
+  width: 100%;
 }
 
 /* LEFT DIV */
@@ -26,10 +31,7 @@
   grid-gap: 5px;
 }
 
-.item-page-focused-image {
-  height: 100%;
-  width: 100%;
-}
+.item-page-focused-image { height: 100%; width: 100% }
 .item-page-image {
   background-position: center;
   background-repeat: no-repeat;
@@ -43,7 +45,7 @@
   transition: all 0.2s linear;
 }
 .item-page-image:hover {
-  border-color: #ffbd00;
+  border-color: var(--yellow);
   filter: grayscale(0%)
 }
 .focused {
@@ -55,6 +57,10 @@
   width: 100%;
 }
 
+.item-page-reviews {
+  flex-direction: column;
+}
+
 /* RIGHT DIV */
 .item-page-info {
   display: flex;
@@ -62,19 +68,53 @@
   align-items: flex-start;
   justify-content: flex-start;
 }
+.item-page-user-info, .item-page-item-info {
+  width: 100%;
+}
+.seller-options {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--black)
+}
+
 .item-page-info button {
-  background-color: #202020;
-  border: 1px solid transparent;
+  border: 2px solid var(--no-color);
   border-radius: 100px;
-  color: #eeeeee;
   cursor: pointer;
   font-weight: bold;
   padding: 10px;
   width: 100%;
   transition: all 0.2s linear;
 }
-.item-page-info button:hover {
-  background-color: #ffbd00;
-  border: 1px solid #ffbd00;
-  color: #202020;
+.seller-options button.item-delete {
+  border-color: var(--red);
+  background-color: var(--no-color);
+  color: var(--black);
+}
+.seller-options button.item-edit {
+  border-color: var(--yellow);
+  background-color: var(--no-color);
+  color: var(--black);
+}
+.item-page-info button.cart-add {
+  border-color: var(--black);
+  background-color: var(--black);
+  color: var(--white);
+}
+.seller-options button.item-delete:hover {
+  background-color: var(--red);
+  border: 2px solid var(--red);
+  color: var(--white);
+}
+.seller-options button.item-edit:hover {
+  background-color: var(--yellow);
+  border: 2px solid var(--yellow);
+  color: var(--black);
+}
+.item-page-info button.cart-add:hover {
+  background-color: var(--yellow);
+  border: 2px solid var(--no-color);
+  color: var(--black);
 }

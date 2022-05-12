@@ -7,8 +7,9 @@ import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
 import MainSplash from './components/Main/Main';
 import NavBar from './components/NavBar';
-import CreateItemForm from './components/createItemForm/createItemForm'
 import ItemPage from './components/itemPage/ItemPage';
+import CreateItemForm from './components/createItemForm/createItemForm'
+import EditItemForm from './components/editItemForm/editItemForm';
 
 import { authenticate } from './store/session';
 
@@ -42,6 +43,9 @@ function App() {
         </Route>
         <Route path='/items/:id' exact={true}>
           <ItemPage />
+        </Route>
+        <Route path='/items/:id/edit' exact={true}>
+          <EditItemForm />
         </Route>
         <ProtectedRoute path='/' exact={true} >
           <MainSplash />

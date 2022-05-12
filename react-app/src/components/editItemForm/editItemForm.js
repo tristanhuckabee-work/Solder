@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
-import './ItemForm.css';
-import { newItem } from '../../store/item';
-// import '../auth/textAreaScroll.css'
+import '../createItemForm/ItemForm.css';
+import { editItem } from '../../store/item';
 
-const CreateItemForm = () => {
+const EditItemForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
+  const item = location.state;
+  console.log('ITEM:', item)
   const user = useSelector(state => state.session.user)
-  const [errors, setErrors] = useState([]);
-  const [name, setName] = useState();
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState();
-  const [pics, setPics] = useState('');
   const defaultImage = 'https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg'
+
+  const [errors, setErrors] = useState([]);
+  const [name, setName] = useState(item.name);
+  const [description, setDescription] = useState(item.description);
+  const [price, setPrice] = useState(item.price);
+  const [pics, setPics] = useState(item.pics.join(','));
   const [focusedImage, setFocusedImage] = useState(defaultImage)
 
   const onSubmit = async (e) => {
@@ -28,14 +31,14 @@ const CreateItemForm = () => {
       pics: pics || 'https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg'
     }
 
-    const newest = await dispatch(newItem(item));
-    if (newest?.errors) {
-      setErrors(newest.errors);
+    const edited = await dispatch(editItem(item));
+    if (edited?.errors) {
+      setErrors(edited.errors);
     } else {
-      newest.pics = newest.pics.split(',')
+      edited.pics = edited.pics.split(',')
       history.push({
-        pathname: `/items/${newest.id}`,
-        state: newest
+        pathname: `/items/${edited.id}`,
+        state: edited
       });
     }
   }
@@ -63,6 +66,11 @@ const CreateItemForm = () => {
     }
     setPics(pictures);
     setFocusedImage(pictures.split(',')[0]);
+  }
+  const clearImages = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setPics('')
   }
 
   const makeFocused = (e) => {
@@ -104,7 +112,7 @@ const CreateItemForm = () => {
         </div>
       </div>
       <form onSubmit={onSubmit}>
-        <h2>Post Your Item</h2>
+        <h2>Edit Your Item</h2>
         <div className='errors'>
           {errors.map((error, ind) => (
             <div key={ind}>{error}</div>
@@ -136,6 +144,7 @@ const CreateItemForm = () => {
             placeholder='Price <<$##.##>>'
           ></input>
         </div>
+        <button onClick={clearImages}>Clear Images</button>
         <div>
           <input
             type='file'
@@ -150,4 +159,4 @@ const CreateItemForm = () => {
   )
 }
 
-export default CreateItemForm;
+export default EditItemForm;
