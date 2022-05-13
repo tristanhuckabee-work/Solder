@@ -110,7 +110,6 @@ header a:hover { color: var(--yellow) }
 .search-modal {
   background-color: var(--white);
   border-radius: 5px;
-  height: 200px;
   min-width: 400px;
   padding: 5px;
   width: clamp(400px, 450px, 500px);

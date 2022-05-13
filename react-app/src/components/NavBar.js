@@ -35,8 +35,8 @@ const NavBar = () => {
   }
 
   const handleSearch = (e) => {
-    const id = e.target.innerText.split('#')[1];
-    history.push(`/items/${id}`);
+    const name = e.target.innerText;
+    matched.forEach(match => match.name === name ? history.push(`/items/${match.id}`) : null)
   }
 
   const getSearchValue = () => {
@@ -51,7 +51,6 @@ const NavBar = () => {
                 onClick={handleSearch}
               >
                 {match?.name}
-                {`#${match?.id}`}
               </div>
             )
           })}
