@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Popup from 'reactjs-popup';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
@@ -13,7 +13,20 @@ import './NavBar.css'
 const NavBar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector(state => state.session.user)
+  const user = useSelector(state => state.session.user);
+  const items = useSelector(state => state.items.items);
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [matched, setMatched] = useState('');
+
+  useEffect(() => {
+    let temp = items.map(item => {
+      if (item.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+        return ({ name: item.name, id: item.id });
+      }
+    })
+    setMatched(temp);
+  }, [setMatched, searchQuery])
 
   const demoUser = async e => {
     e.preventDefault();
@@ -21,79 +34,127 @@ const NavBar = () => {
     history.push('/');
   }
 
-  if (user === null) {
-    return (
-      <header>
-        <div>
-          <NavLink
-            to='/'
-            exact={true}
-            activeClassName='active'
-          >
-            SOLDER
-          </NavLink>
-          <div className='login-signup'>
-            <button onClick={demoUser}>Demo</button>
-            <Popup
-              trigger={<button className='login'> Login </button>}
-              modal
-            >
-              <LoginForm />
-            </Popup>
-            <Popup
-              trigger={<button className='signup'> Signup </button>}
-              modal
-            >
-              <SignUpForm />
-            </Popup>
-          </div>
-        </div>
-        <div className='search'>
-          <i className='fas fa-magnifying-glass' />
-          Searchbar Goes Here
-        </div>
-      </header>
-    );
-  } else {
-    return (
-      <header>
-        <div>
-          <NavLink to='/' exact={true} activeClassName='active'>
-            Home
-          </NavLink>
-          <div className='search'>
-            SearchBar Goes Here
-          </div>
-          <div className='options'>
-            <Popup
-              trigger={
-                <div
-                  to='/'
-                  exact={true}
-                  activeClassName='active'
-                  className='userLink'
-                  style={{ backgroundImage: `url(${user.profilePic})` }}
-                />
-              }
-              position='bottom center'
-            >
-              <div className='user-link-options'>
-                <p>{user?.firstName} {user?.lastName}</p>
-                <LogoutButton />
+  const handleSearch = (e) => {
+    const name = e.target.innerText;
+    matched.forEach(match => match.name === name ? history.push(`/items/${match.id}`) : null)
+  }
+
+  const getSearchValue = () => {
+    if (searchQuery !== '') {
+      return (
+        <>
+          {matched?.map(match => {
+            return (
+              <div
+                className='search-match'
+                key={match?.id}
+                onClick={handleSearch}
+              >
+                {match?.name}
               </div>
-            </Popup>
+            )
+          })}
+        </>
+      );
+    }
+    return (
+        <p>No Results Found</p>
+      )
+    }
+    const updateQuery = (e) => {
+      setSearchQuery(e.target.value);
+    }
+
+    if (user === null) {
+      return (
+        <header>
+          <div>
             <NavLink
-              to='/cart'
+              to='/'
               exact={true}
               activeClassName='active'
             >
-              <i class="fas fa-cart-shopping fa-2x"></i>
+              SOLDER
             </NavLink>
+            <div className='login-signup'>
+              <button onClick={demoUser} className='login'>Demo</button>
+              <Popup
+                trigger={<button className='login'> Login </button>}
+                modal
+              >
+                <LoginForm />
+              </Popup>
+              <Popup
+                trigger={<button className='signup'> Signup </button>}
+                modal
+              >
+                <SignUpForm />
+              </Popup>
+            </div>
           </div>
-        </div>
-      </header>
-    );
+          <Popup
+            trigger={
+              <div className='search'>
+                <i className='fas fa-magnifying-glass' />
+                <input
+                  type='text'
+                  placeholder='Looking for Something?'
+                  value={searchQuery}
+                  onChange={updateQuery}
+                />
+              </div>
+            }
+          >
+            <div className='search-modal'>
+              {getSearchValue()}
+            </div>
+          </Popup>
+        </header>
+      );
+    } else {
+      return (
+        <header>
+          <div>
+            <NavLink to='/' exact={true}
+              activeClassName='active'
+              style={{ paddingRight: '15px' }}
+            >
+              Solder
+            </NavLink>
+            <div className='search'>
+              <i className='fas fa-magnifying-glass' />
+              <input type='text' placeholder='Looking for Something?' />
+            </div>
+            <div className='options'>
+              <Popup
+                trigger={
+                  <div
+                    to='/'
+                    exact={true}
+                    activeClassName='active'
+                    className='userLink'
+                    style={{ backgroundImage: `url(${user.profilePic})` }}
+                  />
+                }
+                position='bottom center'
+              >
+                <div className='user-link-options'>
+                  <p>{user?.firstName} {user?.lastName}</p>
+                  <LogoutButton />
+                </div>
+              </Popup>
+              <NavLink
+                to='/cart'
+                exact={true}
+                activeClassName='active'
+              >
+                <i class="fas fa-cart-shopping fa-2x"></i>
+              </NavLink>
+            </div>
+          </div>
+        </header>
+      );
+    }
   }
-}
 
-export default NavBar;
+  export default NavBar;

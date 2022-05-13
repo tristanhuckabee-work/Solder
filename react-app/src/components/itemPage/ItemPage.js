@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import Popup from 'reactjs-popup';
@@ -16,6 +16,10 @@ const ItemPage = () => {
   if (item.pics === '') item.pics = ['https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg']
 
   const [focusedImage, setFocusedImage] = useState(item?.pics[0])
+
+  useEffect(() => {
+    setFocusedImage(item?.pics[0])
+  }, [item])
 
   const makeFocused = (e) => {
     const backgroundImage = e.target.style.backgroundImage

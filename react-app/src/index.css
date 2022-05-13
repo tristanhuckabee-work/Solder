@@ -10,11 +10,13 @@
   --red:        #880000;
   --red-op:     #88000088;
   --no-color:   #00000000;
-}
-body {
-  background-color: var(--white);
   margin: 0;
   box-sizing: border-box;
+}
+body {
+  margin: 0;
+  width: 100%;
+  background-color: var(--white);
   font-family: 'Raleway', sans-serif;
 }
 .modal {
@@ -24,5 +26,5 @@ body {
   justify-content: center;
 }
 .popup-overlay {
-  background: #20202088;
+  background: var(--black-op);
 }
