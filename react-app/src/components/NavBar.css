@@ -1,23 +1,26 @@
 header {
   background-color: var(--black);
   color: var(--white);
-  display: grid;
-  grid-template-rows: 50px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 3px;
   padding: 10px 20%;
 }
-header div {
+header > div {
   padding: 0 15px;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 header .options{
   width: auto;
   display: flex;
   gap: 5px;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   border: 1px solid var(--no-color);
 }
 header a {
@@ -34,13 +37,20 @@ header a:hover { color: var(--yellow) }
 .login {
   font-weight: bold;
   padding-right: 10px;
+  background-color: var(--no-color);
+  border: none;
+  color: var(--white);
+  cursor: pointer;
 }
+.login:hover { color: var(--yellow) }
 .signup {
   font-weight: bold;
   background-color: var(--yellow);
   color: var(--black);
   padding: 5px 10px;
+  border: none;
   border-radius: 13px;
+  cursor: pointer;
 }
 .signup:hover {
   background-color: var(--white);
@@ -53,8 +63,9 @@ header a:hover { color: var(--yellow) }
   border: 1px solid var(--no-color);
   border-radius: 50%;
   cursor: pointer;
-  height: 50px;
-  width: 20px;
+  height: 40px;
+  width: 40px;
+  margin-left: 15px;
 }
 .userLink:hover {
   border: 1px solid var(--yellow);
@@ -74,4 +85,46 @@ header a:hover { color: var(--yellow) }
   padding-bottom: 5px;
   text-align:center;
   width:100%;
+}
+
+/* SEARCH */
+.search {
+  background-color: var(--white);
+  border-radius: 15px;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-self: flex-start;
+  width: 100%;
+}
+.search input {
+  background-color: var(--no-color);
+  border: none;
+  width: 100%;
+  padding: 5px;
+}
+.search input:focus {
+  outline: none;
+}
+.popup-arrow { display: none }
+.search-modal {
+  background-color: var(--white);
+  border-radius: 5px;
+  height: 200px;
+  min-width: 400px;
+  padding: 5px;
+  width: clamp(400px, 450px, 500px);
+  margin-top: -5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.search-match {
+  padding: 5px;
+  width: 100%;
+  cursor: pointer;
+}
+.search-match:hover {
+  background-color: #cccccc;
 }
