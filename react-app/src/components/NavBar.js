@@ -58,40 +58,69 @@ const NavBar = () => {
       );
     }
     return (
-        <p>No Results Found</p>
-      )
-    }
-    const updateQuery = (e) => {
-      setSearchQuery(e.target.value);
-    }
+      <p>No Results Found</p>
+    )
+  }
+  const updateQuery = (e) => {
+    setSearchQuery(e.target.value);
+  }
 
-    if (user === null) {
-      return (
-        <header>
-          <div>
-            <NavLink
-              to='/'
-              exact={true}
-              activeClassName='active'
+  if (user === null) {
+    return (
+      <header>
+        <div>
+          <NavLink
+            to='/'
+            exact={true}
+            activeClassName='active'
+          >
+            SOLDER
+          </NavLink>
+          <div className='login-signup'>
+            <button onClick={demoUser} className='login'>Demo</button>
+            <Popup
+              trigger={<button className='login'> Login </button>}
+              modal
             >
-              SOLDER
-            </NavLink>
-            <div className='login-signup'>
-              <button onClick={demoUser} className='login'>Demo</button>
-              <Popup
-                trigger={<button className='login'> Login </button>}
-                modal
-              >
-                <LoginForm />
-              </Popup>
-              <Popup
-                trigger={<button className='signup'> Signup </button>}
-                modal
-              >
-                <SignUpForm />
-              </Popup>
-            </div>
+              <LoginForm />
+            </Popup>
+            <Popup
+              trigger={<button className='signup'> Signup </button>}
+              modal
+            >
+              <SignUpForm />
+            </Popup>
           </div>
+        </div>
+        <Popup
+          trigger={
+            <div className='search'>
+              <i className='fas fa-magnifying-glass' />
+              <input
+                type='text'
+                placeholder='Looking for Something?'
+                value={searchQuery}
+                onChange={updateQuery}
+              />
+            </div>
+          }
+        >
+          <div className='search-modal'>
+            {getSearchValue()}
+          </div>
+        </Popup>
+      </header>
+    );
+  } else {
+    return (
+      <header>
+        <div>
+          <NavLink to='/' exact={true}
+            activeClassName='active'
+            style={{ paddingRight: '15px' }}
+          >
+            Solder
+          </NavLink>
           <Popup
             trigger={
               <div className='search'>
@@ -109,52 +138,36 @@ const NavBar = () => {
               {getSearchValue()}
             </div>
           </Popup>
-        </header>
-      );
-    } else {
-      return (
-        <header>
-          <div>
-            <NavLink to='/' exact={true}
-              activeClassName='active'
-              style={{ paddingRight: '15px' }}
+          <div className='options'>
+            <Popup
+              trigger={
+                <div
+                  to='/'
+                  exact={true}
+                  activeClassName='active'
+                  className='userLink'
+                  style={{ backgroundImage: `url(${user.profilePic})` }}
+                />
+              }
+              position='bottom center'
             >
-              Solder
+              <div className='user-link-options'>
+                <p>{user?.firstName} {user?.lastName}</p>
+                <LogoutButton />
+              </div>
+            </Popup>
+            <NavLink
+              to='/cart'
+              exact={true}
+              activeClassName='active'
+            >
+              <i class="fas fa-cart-shopping fa-2x"></i>
             </NavLink>
-            <div className='search'>
-              <i className='fas fa-magnifying-glass' />
-              <input type='text' placeholder='Looking for Something?' />
-            </div>
-            <div className='options'>
-              <Popup
-                trigger={
-                  <div
-                    to='/'
-                    exact={true}
-                    activeClassName='active'
-                    className='userLink'
-                    style={{ backgroundImage: `url(${user.profilePic})` }}
-                  />
-                }
-                position='bottom center'
-              >
-                <div className='user-link-options'>
-                  <p>{user?.firstName} {user?.lastName}</p>
-                  <LogoutButton />
-                </div>
-              </Popup>
-              <NavLink
-                to='/cart'
-                exact={true}
-                activeClassName='active'
-              >
-                <i class="fas fa-cart-shopping fa-2x"></i>
-              </NavLink>
-            </div>
           </div>
-        </header>
-      );
-    }
+        </div>
+      </header>
+    );
   }
+}
 
-  export default NavBar;
+export default NavBar;
