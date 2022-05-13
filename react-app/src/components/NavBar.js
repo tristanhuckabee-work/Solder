@@ -46,22 +46,6 @@ const NavBar = () => {
             >
               <SignUpForm />
             </Popup>
-            {/* <NavLink
-              to='/login'
-              exact={true}
-              className='login'
-              activeClassName='active'
-              >
-              Login
-            </NavLink>
-            <NavLink
-              to='sign-up'
-              exact={true}
-              className='signup'
-              activeClassName='active'
-              >
-              Sign-up
-            </NavLink> */}
           </div>
         </div>
         <div className='search'>
@@ -81,14 +65,30 @@ const NavBar = () => {
             SearchBar Goes Here
           </div>
           <div className='options'>
+            <Popup
+              trigger={
+                <div
+                  to='/'
+                  exact={true}
+                  activeClassName='active'
+                  className='userLink'
+                  style={{ backgroundImage: `url(${user.profilePic})` }}
+                />
+              }
+              position='bottom center'
+            >
+              <div className='user-link-options'>
+                <p>{user?.firstName} {user?.lastName}</p>
+                <LogoutButton />
+              </div>
+            </Popup>
             <NavLink
-              to='/'
+              to='/cart'
               exact={true}
               activeClassName='active'
-              className='userLink'
-              style={{ backgroundImage: `url(${user.profilePic})` }}
-            />
-            <LogoutButton />
+            >
+              <i class="fas fa-cart-shopping fa-2x"></i>
+            </NavLink>
           </div>
         </div>
       </header>

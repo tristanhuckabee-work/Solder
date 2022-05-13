@@ -48,13 +48,30 @@ header a:hover { color: var(--yellow) }
 }
 .userLink {
   background-color: var(--red);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
   background-position: center;
   background-size: cover;
   border: 1px solid var(--no-color);
+  border-radius: 50%;
+  cursor: pointer;
+  height: 50px;
+  width: 20px;
 }
 .userLink:hover {
   border: 1px solid var(--yellow);
+}
+.user-link-options {
+  align-items: center;
+  background-color: var(--true-white);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 200px;
+}
+.user-link-options p {
+  border-bottom: 1px solid var(--black-op);
+  font-weight: bold;
+  padding-bottom: 5px;
+  text-align:center;
+  width:100%;
 }

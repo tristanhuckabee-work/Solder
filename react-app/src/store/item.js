@@ -62,9 +62,8 @@ const ItemReducer = (state = initialState, action) => {
       return state;
     case ITEMS:
       newState = { ...state, ...action.payload}
-      action.payload.items?.forEach(item => {
-        newState[item.id] = item
-      })
+      action.payload.items?.forEach(item => newState[item.id] = item)
+      action.payload.users?.forEach(user => newState[`user-${user.id}`] = user)
         
       return newState;
     case UPDATE:
