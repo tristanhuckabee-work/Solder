@@ -1,13 +1,12 @@
 main { margin: 10px 20% }
 
 .splash-create {
-  background-color: blue;
   background-image: url('https://res.cloudinary.com/dzsgront4/image/upload/v1652205992/IT000012498930-e1426124271973_eypgul.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 10px;
-  color: #eeeeee;
+  color: var(--white);
   height: 175px;
   display: flex;
   flex-direction: column;
@@ -15,22 +14,22 @@ main { margin: 10px 20% }
   justify-content: center;
 }
 .splash-create h2 {
-  background-color: #00000088;
+  background-color: var(--black-op);
   border-radius: 3px;
   padding: 2px 10px;
 }
 .splash-create button{
-  background-color: #ffbd0088;
+  background-color: var(--yellow-op);
   font-size: 20px;
   padding: 5px 15px;
-  border: 2px solid #eeeeee;
+  border: 2px solid var(--white);
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.2s linear;
 }
 .splash-create button:hover {
-  background-color: #00000088;
-  color: #eeeeee;
+  background-color: var(--black-op);
+  color: var(--white);
 }
 .splash-items {
   margin-top: 20px;
@@ -44,10 +43,6 @@ main { margin: 10px 20% }
   main {
     margin: 0;
   }
-  .splash-create {
-    border-radius: 0;
-  }
-  .splash-items {
-    grid-template-columns: 1fr;
-  }
+  .splash-create { border-radius: 0 }
+  .splash-items { grid-template-columns: 1fr }
 }

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import Popup from 'reactjs-popup';
+import { delItem } from '../../store/item';
 
 import './ItemPage.css';
 
 const ItemPage = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
   const user = useSelector(state => state.session.user)
@@ -20,8 +23,12 @@ const ItemPage = () => {
     const payload = backgroundImage.slice(5, lastQuote)
     setFocusedImage(payload)
   }
-  const deleteItem = () => {
-    console.log(item.id)
+  const deleteItem = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    await dispatch( delItem( item.id ) )
+    history.push('/')
   }
   const updateItem = () => {
     history.push({
@@ -59,12 +66,17 @@ const ItemPage = () => {
       <div className='item-page-info'>
         <div className='item-page-user-info'>
           <p>Test User</p>
-          {item.seller_id === user.id && (
+          {item.seller_id === user?.id && (
             <div className='seller-options'>
-              <button
-                className='item-delete'
-                onClick={deleteItem}
-              >DELETE</button>
+              <Popup
+                trigger={<button className='item-delete'>Delete</button>}
+                modal
+              >
+                <div className='delete-confirm'>
+                  <p>Are You Sure?</p>
+                  <button onClick={deleteItem}>YES</button>
+                </div>
+              </Popup>
               <button
                 className='item-edit'
                 onClick={updateItem}

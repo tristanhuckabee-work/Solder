@@ -1,6 +1,6 @@
 header {
-  background-color: #202020;
-  color: #eeeeee;
+  background-color: var(--black);
+  color: var(--white);
   display: grid;
   grid-template-rows: 50px 30px;
   padding: 10px 20%;
@@ -18,15 +18,13 @@ header .options{
   gap: 5px;
   align-items: center;
   justify-content: space-evenly;
-  border: 1px solid transparent;
+  border: 1px solid var(--no-color);
 }
 header a {
   text-decoration: none;
-  color: #eeeeee;
+  color: var(--white);
 }
-header a:hover {
-  color: #ffbd00;
-}
+header a:hover { color: var(--yellow) }
 
 .login-signup {
   width: auto;
@@ -39,24 +37,24 @@ header a:hover {
 }
 .signup {
   font-weight: bold;
-  background-color: #ffbd00;
-  color: #202020;
+  background-color: var(--yellow);
+  color: var(--black);
   padding: 5px 10px;
   border-radius: 13px;
 }
 .signup:hover {
-  background-color: #eeeeee;
-  color: #202020;
+  background-color: var(--white);
+  color: var(--black);
 }
 .userLink {
-  background-color: red;
+  background-color: var(--red);
   width: 50px;
   height: 50px;
   border-radius: 50%;
   background-position: center;
   background-size: cover;
-  border: 1px solid transparent;
+  border: 1px solid var(--no-color);
 }
 .userLink:hover {
-  border: 1px solid #ffbd00;
+  border: 1px solid var(--yellow);
 }

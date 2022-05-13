@@ -79,5 +79,11 @@ def updateItem(id):
 
 @item_routes.route('/<int:id>/delete', methods=['DELETE'])
 @login_required
-def deleteItem():
-  return 'delete'
+def deleteItem(id):
+  id = request.get_json(force=True)
+  item = Item.query.get(id)
+
+  db.session.delete(item)
+  db.session.commit()
+
+  return item.to_dict()

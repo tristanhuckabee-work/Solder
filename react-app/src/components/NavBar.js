@@ -35,15 +35,13 @@ const NavBar = () => {
           <div className='login-signup'>
             <button onClick={demoUser}>Demo</button>
             <Popup
-              trigger={<button> Login </button>}
-              className='login'
+              trigger={<button className='login'> Login </button>}
               modal
             >
               <LoginForm />
             </Popup>
             <Popup
-              trigger={<button> Signup </button>}
-              className='signup'
+              trigger={<button className='signup'> Signup </button>}
               modal
             >
               <SignUpForm />

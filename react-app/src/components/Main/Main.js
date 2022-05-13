@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import ItemCard from '../itemCard/itemCard';
 import Popup from 'reactjs-popup';
-import SignUpForm from '../auth/SignUpForm';
+import LoginForm from '../auth/LoginForm'
 
 import { getAllItems } from '../../store/item';
 
@@ -30,11 +30,11 @@ const MainSplash = () => {
           <button onClick={createItem}>Sell Now</button>
         ) || (
           <Popup
-            trigger={<button> Signup </button>}
-            className='signup'
+            trigger={<button> Login </button>}
+            className='login'
             modal
           >
-            <SignUpForm />
+            <LoginForm />
           </Popup>
         )
         }
