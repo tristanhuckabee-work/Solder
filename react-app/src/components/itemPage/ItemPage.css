@@ -36,7 +36,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  border: 1px solid transparent;
+  border: 1px solid var(--no-color);
   border-radius: 5px;
   cursor: pointer;
   filter: grayscale(50%);
@@ -117,4 +117,25 @@
   background-color: var(--yellow);
   border: 2px solid var(--no-color);
   color: var(--black);
+}
+.delete-confirm {
+  background-color: var(--true-white);
+  border-radius: 10px;
+  text-align: center;
+  width: 300px
+}
+.delete-confirm p { padding: 10px }
+.delete-confirm button {
+  background-color: var(--no-color);
+  border: 2px solid var(--no-color);
+  border-radius: 0 0 10px 10px;
+  border-top: 1px solid var(--black-op);
+  cursor: pointer;
+  padding: 10px;
+  width: 100%;
+
+}
+.delete-confirm button:hover {
+  background-color: var(--red-op);
+  color: var(--true-white);
 }

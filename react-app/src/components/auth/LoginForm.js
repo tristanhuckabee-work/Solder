@@ -12,12 +12,14 @@ const LoginForm = () => {
   const dispatch = useDispatch();
 
   const onLogin = async (e) => {
+    e.stopPropagation();
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
       setErrors(['Invalid Credentials']);
+    } else {
+      history.push('/')
     }
-    history.push('/')
   };
   const demoLogin = async e => {
     e.preventDefault();

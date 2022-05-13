@@ -17,7 +17,7 @@ const EditItemForm = () => {
   const [errors, setErrors] = useState([]);
   const [name, setName] = useState(item.name);
   const [description, setDescription] = useState(item.description);
-  const [price, setPrice] = useState(item.price);
+  const [price, setPrice] = useState(item.price.slice(1));
   const [pics, setPics] = useState(item.pics.join(','));
   const [focusedImage, setFocusedImage] = useState(defaultImage)
 

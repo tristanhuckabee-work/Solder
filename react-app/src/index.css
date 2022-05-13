@@ -2,10 +2,13 @@
 
 :root {
   --yellow:     #ffbd00;
+  --yellow-op:  #ffbd0088;
   --white:      #eeeeee;
   --true-white: #ffffff;
   --black:      #202020;
+  --black-op:   #20202088;
   --red:        #880000;
+  --red-op:     #88000088;
   --no-color:   #00000000;
 }
 body {
@@ -19,4 +22,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.popup-overlay {
+  background: #20202088;
 }

@@ -8,14 +8,14 @@ input[type='file' i] {
   border-radius:3px;
 }
 ::file-selector-button {
-  background-color: #ffbd00;
-  border: 1px solid #ffbd00;
+  background-color: var(--yellow);
+  border: 1px solid var(--yellow);
   border-radius: 15px;
   cursor: pointer;
   padding: 5px 10px;
   transition: all 0.2s linear;
 }
 ::file-selector-button:hover {
-  background-color: #eeeeee;
-  border: 1px solid #eeeeee;
+  background-color: var(--white);
+  border: 1px solid var(--white);
 }

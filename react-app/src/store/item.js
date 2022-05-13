@@ -22,7 +22,6 @@ export const newItem = item => async dispatch => {
 export const getAllItems = () => async dispatch => {
   const res = await fetch('/api/items/');
   const data = await res.json();
-  console.log('DATA', data)
   data.items.forEach(item => {
     if ( !Array.isArray(item.pics) ) item.pics = item.pics.split(',')
   });
@@ -41,7 +40,15 @@ export const editItem = (item) => async dispatch => {
   return data;
 }
 export const delItem = id => async dispatch => {
-  return null;
+  const res = await fetch(`/api/items/${id}/delete`, {
+    method: 'DELETE',
+    body: JSON.stringify(id),
+    headers: {'Content-Type':'application/json'}
+  });
+  const data = await res.json()
+  
+  dispatch( deleteItem(data) );
+  return data;
 }
 
 // Reducer
@@ -52,8 +59,6 @@ const ItemReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE:
       newState = { ...state };
-      console.log('\n\n\n', newState);
-      console.log('\n', action.payload)
       return state;
     case ITEMS:
       newState = { ...state, ...action.payload}
@@ -63,9 +68,12 @@ const ItemReducer = (state = initialState, action) => {
         
       return newState;
     case UPDATE:
-      newState ={ ...state }
-      console.log('\n\n\n\n', newState)
-      console.log('\n', action.payload)
+      newState = { ...state }
+      newState[action.payload.id] = action.payload;
+      newState.items.forEach((item, i) => {
+        if (item.id === action.payload.id) newState.items.splice(i, 1, action.payload )
+      })
+      return newState;
     case DELETE:
       return state;
     default:
