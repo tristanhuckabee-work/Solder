@@ -10,7 +10,6 @@ const EditItemForm = () => {
   const history = useHistory();
   const location = useLocation();
   const item = location.state;
-  console.log('ITEM:', item)
   const user = useSelector(state => state.session.user)
   const defaultImage = 'https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg'
 
@@ -23,19 +22,23 @@ const EditItemForm = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    const editedItem = {
-      id: item.id,
-      name,
-      description,
-      price,
-      pics: pics || defaultImage
-    }
 
-    const edited = await dispatch(editItem(editedItem));
-    console.log('EDITED:', edited);
-    if (edited?.errors) {
-      setErrors(edited.errors);
+    let errors = [];
+    if (name === '') errors.push('Name is Required')
+    if (description === '') errors.push('Description is Required')
+    if (price === '') errors.push('Price is Required')
+    if (errors.length) {
+      setErrors(errors)
     } else {
+      const editedItem = {
+        id: item.id,
+        name,
+        description,
+        price,
+        pics: pics || defaultImage
+      }
+
+      const edited = await dispatch(editItem(editedItem));
       edited.pics = edited.pics.split(',')
       history.push({
         pathname: `/items/${edited.id}`,
