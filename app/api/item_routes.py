@@ -52,7 +52,12 @@ def createItem():
 @item_routes.route('/')
 def getAllItem():
   items = Item.query.all()
-  return {'items': [item.to_dict() for item in items]}
+  users = User.query.all()
+
+  return {
+    'items': [item.to_dict() for item in items],
+    'users': [user.to_dict() for user in users]
+  }
 
 @item_routes.route('/<int:id>/edit', methods=['PATCH'])
 @login_required

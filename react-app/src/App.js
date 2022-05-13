@@ -46,6 +46,9 @@ function App() {
         <Route path='/items/:id/edit' exact={true}>
           <EditItemForm />
         </Route>
+        <Route path='/cart' exact={true}>
+          <h1>CART</h1>
+        </Route>
         <ProtectedRoute path='/' exact={true} >
           <MainSplash />
         </ProtectedRoute>
