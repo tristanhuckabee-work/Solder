@@ -8,6 +8,7 @@ import NavBar from './components/NavBar';
 import ItemPage from './components/itemPage/ItemPage';
 import CreateItemForm from './components/createItemForm/createItemForm'
 import EditItemForm from './components/editItemForm/editItemForm';
+import CartPage from './components/cartPage/cart';
 
 import { authenticate } from './store/session';
 
@@ -43,7 +44,7 @@ function App() {
           <EditItemForm />
         </Route>
         <Route path='/cart' exact={true}>
-          <h1>CART</h1>
+          <CartPage />
         </Route>
         <ProtectedRoute path='/' exact={true} >
           <MainSplash />

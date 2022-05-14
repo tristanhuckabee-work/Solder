@@ -40,6 +40,14 @@ const ItemPage = () => {
       state: item
     });
   }
+  // const addToCart = () => {
+
+  //   item = {
+
+  //     cart
+  //     count: 1
+  //   }
+  // }
 
   return (
     <div className='item-page'>

@@ -4,17 +4,28 @@ from app.models import Item, User, Cart, ItemsInCart, db
 
 cart_routes = Blueprint('cart', __name__)
 
-# REMEMBER TO SEED UNDO, MIGRATE, UPGRADE, AND RESEED
 
 @cart_routes.route('/new', methods=[''])
 @login_required
 def addToCart(payload):
-  pass
+  data = request.get_json()
+  
+  itemInCart = ItemsInCart(
+    item_id=data['item_id'],
+    cart_id=data['cart_id'],
+    count  =data['count']
+  )
+  db.session.add(itemInCart)
+  db.session.commit()
 
-@cart_routes.route('/')
+  return itemInCart.to_dict()
+
+@cart_routes.route('/<int:user_id>')
 @login_required
-def getCart():
-  pass
+def getCart(user_id):
+  cart = Cart.query.filter(Cart.owner_id == user_id).one()
+
+  return {'cart': cart.to_dict()}
 
 @cart_routes.route('/edit')
 @login_required

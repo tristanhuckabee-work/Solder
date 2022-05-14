@@ -1,15 +1,31 @@
-const CREATE = 'cart/new'
-const ITEMS  = 'cart'
-const UPDATE = 'cart/edit'
-const DELETE = 'cart/delete'
+const CREATE = 'cart/ADD_TO_CART'
+const ITEMS  = 'cart/GET_CART'
+const UPDATE = 'cart/CHANGE_ITEM_COUNT'
+const DELETE = 'cart/CLEAR_CART'
 
 const addItem    = payload => ({ type:CREATE, payload})
 const getCart    = payload => ({ type:ITEMS, payload})
 const updateCart = payload => ({ type:UPDATE, payload})
 const clearCart  = payload => ({ type:DELETE, payload})
 
-export const addToCart = payload => async dispatch => {}
-export const getCartItems = id => async dispatch => {}
+export const addToCart = payload => async dispatch => {
+  console.log('INSIDE ADD:', payload);
+  const res = await fetch('/api/cart/new', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: {'Content-Type':'application/json'}
+  });
+  const data = await res.json();
+
+  dispatch( addItem( data ) );
+  return data;
+}
+export const getCartItems = id => async dispatch => {
+  const res = await fetch(`/api/cart/${id}`);
+  const data = await res.json();
+
+  dispatch( getCart( data ) );
+}
 export const changeItemCount = id => async dispatch => {}
 export const emptyCart = id => async dispatch => {}
 
@@ -19,9 +35,12 @@ const CartReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case CREATE:
-      return state;
+      newState = { ...state }
+      console.log('CREATE STATE:', newState)
+      console.log('PAYLOAD:', action.payload)
+      return newState;
     case ITEMS:
-      return state;
+      return newState = { ...state, ...action.payload.cart }
     case UPDATE:
       return state;
     case DELETE:

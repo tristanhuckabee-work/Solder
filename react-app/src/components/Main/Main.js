@@ -7,6 +7,7 @@ import Popup from 'reactjs-popup';
 import LoginForm from '../auth/LoginForm'
 
 import { getAllItems } from '../../store/item';
+import { getCartItems } from '../../store/cart';
 
 import './Main.css'
 
@@ -18,7 +19,8 @@ const MainSplash = () => {
 
   useEffect(() => {
     dispatch(getAllItems());
-  }, [dispatch])
+    if (user) dispatch(getCartItems(user.id))
+  }, [dispatch, user])
 
   const createItem = () => history.push('/items/new');
 
