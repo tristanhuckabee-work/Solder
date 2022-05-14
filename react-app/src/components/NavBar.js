@@ -26,7 +26,7 @@ const NavBar = () => {
       }
     })
     setMatched(temp);
-  }, [setMatched, searchQuery])
+  }, [setMatched, searchQuery, items])
 
   const demoUser = async e => {
     e.preventDefault();
@@ -36,7 +36,7 @@ const NavBar = () => {
 
   const handleSearch = (e) => {
     const name = e.target.innerText;
-    matched.forEach(match => match.name === name ? history.push(`/items/${match.id}`) : null)
+    matched.forEach(match => match?.name === name ? history.push(`/items/${match.id}`) : null)
   }
 
   const getSearchValue = () => {
@@ -69,11 +69,7 @@ const NavBar = () => {
     return (
       <header>
         <div>
-          <NavLink
-            to='/'
-            exact={true}
-            activeClassName='active'
-          >
+          <NavLink to='/'>
             SOLDER
           </NavLink>
           <div className='login-signup'>
@@ -115,8 +111,7 @@ const NavBar = () => {
     return (
       <header>
         <div>
-          <NavLink to='/' exact={true}
-            activeClassName='active'
+          <NavLink to='/'
             style={{ paddingRight: '15px' }}
           >
             Solder
@@ -143,8 +138,6 @@ const NavBar = () => {
               trigger={
                 <div
                   to='/'
-                  exact={true}
-                  activeClassName='active'
                   className='userLink'
                   style={{ backgroundImage: `url(${user.profilePic})` }}
                 />
@@ -156,12 +149,8 @@ const NavBar = () => {
                 <LogoutButton />
               </div>
             </Popup>
-            <NavLink
-              to='/cart'
-              exact={true}
-              activeClassName='active'
-            >
-              <i class="fas fa-cart-shopping fa-2x"></i>
+            <NavLink  to='/cart'>
+              <i className="fas fa-cart-shopping fa-2x"></i>
             </NavLink>
           </div>
         </div>

@@ -28,7 +28,8 @@ const MainSplash = () => {
         <h2>Got Something to Sell?</h2>
         {user && (
           <button onClick={createItem}>Sell Now</button>
-        ) || (
+        )}
+        {!user && (
           <Popup
             trigger={<button> Login </button>}
             className='login'
