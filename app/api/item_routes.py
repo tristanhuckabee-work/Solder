@@ -54,10 +54,7 @@ def getAllItem():
   items = Item.query.all()
   users = User.query.all()
 
-  return {
-    'items': [item.to_dict() for item in items],
-    'users': [user.to_dict() for user in users]
-  }
+  return {'items': [item.to_dict() for item in items]}
 
 @item_routes.route('/<int:id>/edit', methods=['PATCH'])
 @login_required

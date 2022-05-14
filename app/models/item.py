@@ -23,9 +23,9 @@ class Item(db.Model):
 
     return {
       'id': self.id,
-      'seller_id': self.seller_id,
       'name': self.name,
       'description': self.description,
       'price': self.price,
-      'pics': pictures
+      'pics': pictures,
+      'seller': self.seller.to_dict()
     }
