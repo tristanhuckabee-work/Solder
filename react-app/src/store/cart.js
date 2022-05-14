@@ -40,7 +40,7 @@ const CartReducer = (state = initialState, action) => {
       console.log('PAYLOAD:', action.payload)
       return newState;
     case ITEMS:
-      return newState = { ...state, ...action.payload.cart }
+      return newState = { ...state, ...action.payload }
     case UPDATE:
       return state;
     case DELETE:

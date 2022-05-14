@@ -19,7 +19,7 @@ const MainSplash = () => {
 
   useEffect(() => {
     dispatch(getAllItems());
-    if (user) dispatch(getCartItems(user.id))
+    if (user) dispatch(getCartItems(user?.id))
   }, [dispatch, user])
 
   const createItem = () => history.push('/items/new');

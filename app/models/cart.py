@@ -14,5 +14,5 @@ class Cart(db.Model):
     return {
       'id': self.id,
       'owner_id': self.owner_id,
-      'items': [item.to_dict for item in self.items]
+      'items': [item.to_dict() for item in self.items]
     }

@@ -20,12 +20,11 @@ def addToCart(payload):
 
   return itemInCart.to_dict()
 
-@cart_routes.route('/<int:user_id>')
+@cart_routes.route('/<int:id>')
 @login_required
-def getCart(user_id):
-  cart = Cart.query.filter(Cart.owner_id == user_id).one()
-
-  return {'cart': cart.to_dict()}
+def getCart(id):
+  cart = Cart.query.filter(Cart.owner_id == id).one()
+  return cart.to_dict()
 
 @cart_routes.route('/edit')
 @login_required
