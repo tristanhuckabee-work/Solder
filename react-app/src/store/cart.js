@@ -36,11 +36,20 @@ export const changeItemCount = payload => async dispatch => {
   });
   const data = await res.json();
   await dispatch(updateCart(data));
-  return data;
 }
-export const emptyCart = id => async dispatch => { }
+export const emptyCart = id => async dispatch => {
+  console.log('INSIDE:', id);
+  const res = await fetch('/api/cart/delete', {
+    method: 'DELETE',
+    body: JSON.stringify(id),
+    header: { 'Content-Type': 'application/json' }
+  })
+  const data = await res.json()
+  console.log('INSIDE DATA:', data)
+  await dispatch(clearCart(data));
+}
 
-const initialState = {};
+const initialState = { items: [] };
 const CartReducer = (state = initialState, action) => {
   let newState;
 
@@ -68,9 +77,8 @@ const CartReducer = (state = initialState, action) => {
           }
         }
       }
-
     case DELETE:
-      return state;
+      return initialState;
     default:
       return state;
   }
