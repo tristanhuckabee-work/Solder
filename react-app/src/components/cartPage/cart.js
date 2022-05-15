@@ -1,9 +1,12 @@
 import React/*, { useEffect }*/ from 'react';
-import { useSelector/*, useDispatch*/ } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeItemCount } from '../../store/cart';
+
 
 import './cart.css'
 
 const CartPage = () => {
+  const dispatch = useDispatch();
   const items = useSelector(state => state.items);
   const cart = useSelector(state => state.cart);
   const IIC = cart.items;
@@ -11,18 +14,36 @@ const CartPage = () => {
   const getTotal = () => {
     let total = 0;
     IIC?.forEach(item => {
-      total += parseFloat( items[item?.item_id]?.price.split('$')[1] )*item.count;
+      total += parseFloat(items[item?.item_id]?.price.split('$')[1]) * item.count;
     })
     return `$${total}`;
   }
-  // not done
-  const changeCount = (e) => {
-    const op = e.target.id.split(' ');
-    if ( op[0] === 'minus' ) {
-      console.log('minus')
+  const changeCount = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const args = e.target.id.split(' ');
+
+    let modified;
+      
+
+    if (args[0] === 'minus') {
+      modified = {
+        item_id: Number(args[2]),
+        cart_id: Number(args[1]),
+        count:   Number(args[3]) - 1
+      }
+      console.log('minus', modified);
     } else {
-      console.log('plus')
+      modified = {
+        item_id: Number(args[2]),
+        cart_id: Number(args[1]),
+        count:   Number(args[3]) + 1
+      }
+      console.log('plus', modified);
     }
+    
+    await dispatch( changeItemCount( modified ) );
   }
   const handleClear = () => {
     console.log('Cart Clear Clicked');
@@ -35,6 +56,11 @@ const CartPage = () => {
     <>
       <div className='cart-wrapper'>
         <div className='cart-container'>
+          {IIC.length === 0 && (
+            <div className='empty'>
+              Your Shopping Cart is Empty
+            </div>
+          )}
           {IIC?.map(item => {
             const curr = items[item?.item_id];
             return (
@@ -50,13 +76,13 @@ const CartPage = () => {
                 <div className='cart-container-item-count'>
                   <i
                     className='fas fa-minus'
-                    id={`minus ${item.id}`}
-                    onClick={changeCount}/>
+                    id={`minus ${item.cart_id} ${item.item_id} ${item.count}`}
+                    onClick={changeCount} />
                   <h3>{item?.count}</h3>
                   <i
                     className='fas fa-plus'
-                    id={`plus ${item.id}`}
-                    onClick={changeCount}/>
+                    id={`plus ${item.cart_id} ${item.item_id} ${item.count}`}
+                    onClick={changeCount} />
                 </div>
               </div>
             )
@@ -66,15 +92,20 @@ const CartPage = () => {
       <div className='summary'>
         <h2>Your Cart</h2>
         <div className='summary-items'>
+          {IIC.length === 0 && (
+            <div className='summary-empty'>
+              Your Shopping Cart is Empty
+            </div>
+          )}
           {IIC?.map(item => {
-              const curr = items[item?.item_id];
-              return (
-                <div key={curr.id}className='summary-item'>
-                  <h3>{curr?.name}</h3>
-                  <p>{ `$${Number(curr?.price.split('$')[1])*item.count}` }</p>
-                </div>
-              )
-            })}
+            const curr = items[item?.item_id];
+            return (
+              <div key={curr.id} className='summary-item'>
+                <h3>{curr?.name}</h3>
+                <p>{`$${Number(curr?.price.split('$')[1]) * item.count}`}</p>
+              </div>
+            )
+          })}
         </div>
         <div className='cart-checkout'>
           <h3>{`Total: ${getTotal()}`}</h3>

@@ -9,6 +9,7 @@ import ItemPage from './components/itemPage/ItemPage';
 import CreateItemForm from './components/createItemForm/createItemForm'
 import EditItemForm from './components/editItemForm/editItemForm';
 import CartPage from './components/cartPage/cart';
+import Page404 from './components/Page404/page404';
 
 import { authenticate } from './store/session';
 // import { getAllItems } from './store/item';
@@ -53,6 +54,9 @@ function App() {
         </Route>
         <Route path='/cart' exact={true}>
           <CartPage />
+        </Route>
+        <Route path='/:other'>
+          <Page404 />
         </Route>
         <ProtectedRoute path='/' exact={true} >
           <MainSplash />
