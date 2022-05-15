@@ -49,15 +49,10 @@
 .focused {
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   border-radius: 5px;
   height: 100%;
   width: 100%;
-}
-
-/* REVIEWS */
-.item-page-reviews {
-  flex-direction: column;
 }
 
 /* ITEM INFO */
@@ -154,4 +149,9 @@
 .delete-confirm button:hover {
   background-color: var(--red-op);
   color: var(--true-white);
+}
+
+/* REVIEWS */
+.item-page-reviews {
+  flex-direction: column;
 }

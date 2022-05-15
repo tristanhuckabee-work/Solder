@@ -1,6 +1,6 @@
 // constants
-const SET_USER = 'session/SET_USER';
-const REMOVE_USER = 'session/REMOVE_USER';
+const SET_USER = 'SET_USER';
+const REMOVE_USER = 'REMOVE_USER';
 
 const setUser = (user) => ({
   type: SET_USER,

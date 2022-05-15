@@ -1,7 +1,7 @@
-const CREATE = 'cart/ADD_TO_CART'
-const ITEMS = 'cart/GET_CART'
-const UPDATE = 'cart/CHANGE_ITEM_COUNT'
-const DELETE = 'cart/CLEAR_CART'
+const CREATE = 'ADD_TO_CART'
+const ITEMS = 'GET_CART'
+const UPDATE = 'CHANGE_ITEM_COUNT'
+const DELETE = 'CLEAR_CART'
 
 const addItem = payload => ({ type: CREATE, payload })
 const getCart = payload => ({ type: ITEMS, payload })

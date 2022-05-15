@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import { delItem } from '../../store/item';
 import { addToCart, changeItemCount } from '../../store/cart';
+import { getReviews } from '../../store/review';
 
 import './ItemPage.css';
 
@@ -16,10 +17,16 @@ const ItemPage = () => {
   const item_id = window.location.pathname.split('/')[2];
   const item = useSelector(state => state.items[item_id]);
   const seller = item.seller;
-  if (item.pics === '') item.pics = ['https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg']
+  // if (item.pics === '') item.pics = ['https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg']
 
   const [focusedImage, setFocusedImage] = useState(item?.pics[0]);
   const [inCart, setInCart] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      await dispatch( getReviews(item_id) )
+    })()
+  }, [dispatch])
 
   const checkIfInCart = () => {
     const ids = IIC?.map(item => item.item_id)
@@ -135,11 +142,15 @@ const ItemPage = () => {
         <div className='item-page-item-info'>
           <h2>{item.name}</h2>
           <h3>{item.price}</h3>
-          { inCart && (
-            <button className='cart-add' onClick={removeItem}>Remove from Cart</button>
-          )}
-          { !inCart && (
-            <button className='cart-add' onClick={addItem}>Add to Cart</button>
+          { user && (
+            <>
+              { inCart && (
+                <button className='cart-add' onClick={removeItem}>Remove from Cart</button>
+              )}
+              { !inCart && (
+                <button className='cart-add' onClick={addItem}>Add to Cart</button>
+              )}
+            </>
           )}
           <p>{item.description}</p>
         </div>

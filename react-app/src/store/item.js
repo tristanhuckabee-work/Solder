@@ -1,7 +1,7 @@
-const CREATE = 'items/new'
-const ITEMS  = 'items'
-const UPDATE = 'items/update'
-const DELETE = 'items/delete'
+const CREATE = 'CREATE_ITEM'
+const ITEMS  = 'GET_ALL_ITEMS'
+const UPDATE = 'UPDATE_ITEM'
+const DELETE = 'DELETE_ITEM'
 
 const createItem = payload => ({ type: CREATE, payload})
 const getItems   = payload => ({ type: ITEMS, payload})
