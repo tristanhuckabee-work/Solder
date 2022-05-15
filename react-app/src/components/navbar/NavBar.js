@@ -3,9 +3,9 @@ import Popup from 'reactjs-popup';
 import { useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 
-import LogoutButton from './auth/LogoutButton';
-import LoginForm from './auth/LoginForm';
-import SignUpForm from './auth/SignUpForm';
+import LogoutButton from '../auth/LogoutButton';
+import LoginForm from '../auth/LoginForm';
+import SignUpForm from '../auth/SignUpForm';
 
 import './NavBar.css'
 

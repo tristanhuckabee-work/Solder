@@ -1,0 +1,15 @@
+.review-status { text-align: center }
+.review-with-stars {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.rating {
+  background-color: var(--white);
+  border-radius: 3px;
+  padding: 5px 0;
+  width: 100%;
+}
+.fill { color: var(--yellow); }
+.blank { color: var(--black-op); }

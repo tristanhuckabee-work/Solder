@@ -11,7 +11,6 @@ def createReview():
   pass
 
 @review_routes.route('/<int:item>')
-@login_required
 def getItemReviews(item):
   reviews = Review.query.filter(Review.item_id == item).all()
   return {'reviews': [review.to_dict() for review in reviews]}

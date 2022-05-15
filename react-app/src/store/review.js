@@ -27,7 +27,7 @@ const ReviewReducer = (state = initialState, action) => {
       return newState = {...state, action:'CREATE'};
     case REVIEWS:
       newState = {...action.payload};
-      action.payload.reviews.forEach(review => {
+      action?.payload?.reviews?.forEach(review => {
         newState[review.id] = review
       });
       

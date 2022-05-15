@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Popup from 'reactjs-popup';
 import { delItem } from '../../store/item';
 import { addToCart, changeItemCount } from '../../store/cart';
 import { getReviews } from '../../store/review';
+import Reviews from '../itemReview/reviews';
+import Popup from 'reactjs-popup';
 
 import './ItemPage.css';
 
 const ItemPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = useSelector(state => state.session.user)
-  const cart = useSelector(state => state.cart)
+  const user = useSelector(state => state.session.user);
+  const cart = useSelector(state => state.cart);
+  const reviews = useSelector(state => state.reviews.reviews);
   const IIC  = cart.items;
   const item_id = window.location.pathname.split('/')[2];
   const item = useSelector(state => state.items[item_id]);
@@ -157,8 +159,7 @@ const ItemPage = () => {
       </div>
 
       <div className='item-page-reviews'>
-        <h2>This is where reviews will go once I get to it</h2>
-        <p>does this not entertain the box-model gods?</p>
+        <Reviews item={item}/>
       </div>
     </div>
   )
