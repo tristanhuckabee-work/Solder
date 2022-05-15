@@ -9,13 +9,14 @@ const updateCart = payload => ({ type:UPDATE, payload})
 const clearCart  = payload => ({ type:DELETE, payload})
 
 export const addToCart = payload => async dispatch => {
-  console.log('INSIDE ADD:', payload);
   const res = await fetch('/api/cart/new', {
     method: 'POST',
     body: JSON.stringify(payload),
     headers: {'Content-Type':'application/json'}
   });
+  console.log('INSIDE RES:', res);
   const data = await res.json();
+  console.log('INSIDE DATA:', data);
 
   dispatch( addItem( data ) );
   return data;
