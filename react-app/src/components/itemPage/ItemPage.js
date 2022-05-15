@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import { delItem } from '../../store/item';
-import { addToCart } from '../../store/cart';
+import { addToCart, changeItemCount } from '../../store/cart';
 
 import './ItemPage.css';
 
@@ -21,14 +21,9 @@ const ItemPage = () => {
   const [focusedImage, setFocusedImage] = useState(item?.pics[0]);
   const [inCart, setInCart] = useState(false);
 
-  useEffect(() => {
-    setFocusedImage(item?.pics[0])
-    setInCart( checkIfInCart );
-  }, [item])
-
   const checkIfInCart = () => {
-    const ids = IIC.map(item => item.item_id)
-    return ids.includes(item.id)
+    const ids = IIC?.map(item => item.item_id)
+    return ids?.includes(item?.id)
   }
 
   const makeFocused = (e) => {
@@ -61,8 +56,25 @@ const ItemPage = () => {
     }
 
     await dispatch( addToCart( ToAdd ) );
-    return null;
   }
+  const removeItem = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const ToRemove = {
+      item_id: item.id,
+      cart_id: cart.id,
+      count: 0
+    }
+
+    await dispatch( changeItemCount( ToRemove ) );
+  }
+
+  useEffect(() => {
+    setFocusedImage(item?.pics[0])
+    setInCart( checkIfInCart );
+  }, [cart])
+
 
   return (
     <div className='item-page'>
@@ -121,7 +133,7 @@ const ItemPage = () => {
           <h2>{item.name}</h2>
           <h3>{item.price}</h3>
           { inCart && (
-            <button className='cart-add'>Remove from Cart</button>
+            <button className='cart-add' onClick={removeItem}>Remove from Cart</button>
           )}
           { !inCart && (
             <button className='cart-add' onClick={addItem}>Add to Cart</button>
