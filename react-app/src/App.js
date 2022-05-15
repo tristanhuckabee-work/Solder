@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch/*, useSelector*/ } from 'react-redux';
 
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import MainSplash from './components/Main/Main';
@@ -11,16 +11,24 @@ import EditItemForm from './components/editItemForm/editItemForm';
 import CartPage from './components/cartPage/cart';
 
 import { authenticate } from './store/session';
+// import { getAllItems } from './store/item';
+// import { getCartItems } from './store/cart';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
+  // const user = useSelector(state => state.session.user);
 
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());
       setLoaded(true);
     })();
+    // Get Fetch Working Here
+    // (async () => {
+    //   await dispatch(getAllItems())
+    //   if (user) await dispatch(getCartItems(user?.id))
+    // })();
   }, [dispatch]);
 
   if (!loaded) {

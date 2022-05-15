@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Popup from 'reactjs-popup';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
-import { login } from '../store/session';
 
 import LogoutButton from './auth/LogoutButton';
 import LoginForm from './auth/LoginForm';
@@ -12,7 +11,6 @@ import './NavBar.css'
 
 const NavBar = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
   const items = useSelector(state => state.items.items);
 
@@ -28,17 +26,10 @@ const NavBar = () => {
     setMatched(temp);
   }, [setMatched, searchQuery, items])
 
-  const demoUser = async e => {
-    e.preventDefault();
-    await dispatch(login('demo@aa.io', 'password'));
-    history.push('/');
-  }
-
   const handleSearch = (e) => {
     const name = e.target.innerText;
     matched.forEach(match => match?.name === name ? history.push(`/items/${match.id}`) : null)
   }
-
   const getSearchValue = () => {
     if (searchQuery !== '') {
       return (
@@ -73,7 +64,6 @@ const NavBar = () => {
             SOLDER
           </NavLink>
           <div className='login-signup'>
-            <button onClick={demoUser} className='login'>Demo</button>
             <Popup
               trigger={<button className='login'> Login </button>}
               modal

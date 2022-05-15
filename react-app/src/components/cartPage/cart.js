@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React/*, { useEffect }*/ from 'react';
+import { useSelector/*, useDispatch*/ } from 'react-redux';
 
 import './cart.css'
 
@@ -11,7 +11,6 @@ const CartPage = () => {
   const getTotal = () => {
     let total = 0;
     IIC?.forEach(item => {
-      // console.log(items[item?.item_id]?.price);
       total += parseFloat( items[item?.item_id]?.price.split('$')[1] )*item.count;
     })
     return `$${total}`;
@@ -70,7 +69,7 @@ const CartPage = () => {
           {IIC?.map(item => {
               const curr = items[item?.item_id];
               return (
-                <div className='summary-item'>
+                <div key={curr.id}className='summary-item'>
                   <h3>{curr?.name}</h3>
                   <p>{ `$${Number(curr?.price.split('$')[1])*item.count}` }</p>
                 </div>

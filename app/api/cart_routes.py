@@ -5,10 +5,11 @@ from app.models import Item, User, Cart, ItemsInCart, db
 cart_routes = Blueprint('cart', __name__)
 
 
-@cart_routes.route('/new', methods=[''])
+@cart_routes.route('/new', methods=['POST'])
 @login_required
-def addToCart(payload):
+def addToCart():
   data = request.get_json()
+  print(f'\n\n\n{data}')
   
   itemInCart = ItemsInCart(
     item_id=data['item_id'],
@@ -26,10 +27,20 @@ def getCart(id):
   cart = Cart.query.filter(Cart.owner_id == id).one()
   return cart.to_dict()
 
-@cart_routes.route('/edit')
+@cart_routes.route('/edit', methods=['PATCH'])
 @login_required
-def updateCart(id):
-  pass
+def updateCart():
+  data = request.get_json(force=True)
+  item = ItemsInCart.query.filter(ItemsInCart.cart_id == data['cart_id']).filter(ItemsInCart.item_id == data['item_id']).one()
+
+  if data['count'] <= 0:
+    db.session.delete(item)
+    db.session.commit()
+    return {'item': item.to_dict(), 'delete': True}
+  else:
+    item.count = data['count']
+    db.session.commit()
+    return {'item': item.to_dict(), 'delete': False}
 
 @cart_routes.route('/delete')
 @login_required

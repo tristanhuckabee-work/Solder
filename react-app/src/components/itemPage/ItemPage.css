@@ -71,12 +71,26 @@
 .item-page-user-info, .item-page-item-info {
   width: 100%;
 }
+.item-page-user-info > div {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+}
 .seller-options {
   display: flex;
   justify-content: space-between;
   gap: 5px;
   padding-bottom: 5px;
   border-bottom: 1px solid var(--black)
+}
+.seller-pic {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  height: 50px;
+  margin-right: 10px;
+  width: 50px;
 }
 
 .item-page-info button {
@@ -88,6 +102,7 @@
   width: 100%;
   transition: all 0.2s linear;
 }
+
 .seller-options button.item-delete {
   border-color: var(--red);
   background-color: var(--no-color);
@@ -118,6 +133,7 @@
   border: 2px solid var(--no-color);
   color: var(--black);
 }
+
 .delete-confirm {
   background-color: var(--true-white);
   border-radius: 10px;

@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import { delItem } from '../../store/item';
+import { addToCart, changeItemCount } from '../../store/cart';
 
 import './ItemPage.css';
 
 const ItemPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
   const user = useSelector(state => state.session.user)
+  const cart = useSelector(state => state.cart)
+  const IIC  = cart.items;
   const item_id = window.location.pathname.split('/')[2];
-  const item = useSelector(state => state.items[item_id]) || location.state;
+  const item = useSelector(state => state.items[item_id]);
+  const seller = item.seller;
   if (item.pics === '') item.pics = ['https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg']
 
-  const [focusedImage, setFocusedImage] = useState(item?.pics[0])
+  const [focusedImage, setFocusedImage] = useState(item?.pics[0]);
+  const [inCart, setInCart] = useState(false);
 
-  useEffect(() => {
-    setFocusedImage(item?.pics[0])
-  }, [item])
+  const checkIfInCart = () => {
+    const ids = IIC?.map(item => item.item_id)
+    return ids?.includes(item?.id)
+  }
 
   const makeFocused = (e) => {
     const backgroundImage = e.target.style.backgroundImage
@@ -40,14 +45,36 @@ const ItemPage = () => {
       state: item
     });
   }
-  // const addToCart = () => {
+  const addItem = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-  //   item = {
+    const ToAdd = {
+      item_id: item.id,
+      cart_id: cart.id,
+      count: 1
+    }
 
-  //     cart
-  //     count: 1
-  //   }
-  // }
+    await dispatch( addToCart( ToAdd ) );
+  }
+  const removeItem = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const ToRemove = {
+      item_id: item.id,
+      cart_id: cart.id,
+      count: 0
+    }
+
+    await dispatch( changeItemCount( ToRemove ) );
+  }
+
+  useEffect(() => {
+    setFocusedImage(item?.pics[0])
+    setInCart( checkIfInCart );
+  }, [cart])
+
 
   return (
     <div className='item-page'>
@@ -77,7 +104,12 @@ const ItemPage = () => {
 
       <div className='item-page-info'>
         <div className='item-page-user-info'>
-          <p>Test User</p>
+          <div>
+            <div className='seller-pic'
+              style={{backgroundImage: `url(${seller.profilePic})`}}
+            ></div>
+            <h3>{seller.firstName} {seller.lastName}</h3>
+          </div>
           {item.seller_id === user?.id && (
             <div className='seller-options'>
               <Popup
@@ -100,7 +132,12 @@ const ItemPage = () => {
         <div className='item-page-item-info'>
           <h2>{item.name}</h2>
           <h3>{item.price}</h3>
-          <button className='cart-add'>Add to Cart</button>
+          { inCart && (
+            <button className='cart-add' onClick={removeItem}>Remove from Cart</button>
+          )}
+          { !inCart && (
+            <button className='cart-add' onClick={addItem}>Add to Cart</button>
+          )}
           <p>{item.description}</p>
         </div>
       </div>
