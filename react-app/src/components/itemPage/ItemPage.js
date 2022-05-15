@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Popup from 'reactjs-popup';
 import { delItem } from '../../store/item';
 import { addToCart, changeItemCount } from '../../store/cart';
+import { getReviews } from '../../store/review';
+import Reviews from '../itemReview/reviews';
+import Popup from 'reactjs-popup';
 
 import './ItemPage.css';
 
 const ItemPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = useSelector(state => state.session.user)
-  const cart = useSelector(state => state.cart)
+  const user = useSelector(state => state.session.user);
+  const cart = useSelector(state => state.cart);
+  const reviews = useSelector(state => state.reviews.reviews);
   const IIC  = cart.items;
   const item_id = window.location.pathname.split('/')[2];
   const item = useSelector(state => state.items[item_id]);
   const seller = item.seller;
-  if (item.pics === '') item.pics = ['https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg']
+  // if (item.pics === '') item.pics = ['https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg']
 
   const [focusedImage, setFocusedImage] = useState(item?.pics[0]);
   const [inCart, setInCart] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      await dispatch( getReviews(item_id) )
+    })()
+  }, [dispatch])
 
   const checkIfInCart = () => {
     const ids = IIC?.map(item => item.item_id)
@@ -110,41 +119,47 @@ const ItemPage = () => {
             ></div>
             <h3>{seller.firstName} {seller.lastName}</h3>
           </div>
-          {item.seller_id === user?.id && (
-            <div className='seller-options'>
-              <Popup
-                trigger={<button className='item-delete'>Delete</button>}
-                modal
-              >
-                <div className='delete-confirm'>
-                  <p>Are You Sure?</p>
-                  <button onClick={deleteItem}>YES</button>
+          { user && (
+            <>
+              {item.seller_id === user?.id && (
+                <div className='seller-options'>
+                  <Popup
+                    trigger={<button className='item-delete'>Delete</button>}
+                    modal
+                  >
+                    <div className='delete-confirm'>
+                      <p>Are You Sure?</p>
+                      <button onClick={deleteItem}>YES</button>
+                    </div>
+                  </Popup>
+                  <button
+                    className='item-edit'
+                    onClick={updateItem}
+                  >EDIT</button>
                 </div>
-              </Popup>
-              <button
-                className='item-edit'
-                onClick={updateItem}
-              >EDIT</button>
-            </div>
-          )
-          }
+              )}
+            </>
+          )}
         </div>
         <div className='item-page-item-info'>
           <h2>{item.name}</h2>
           <h3>{item.price}</h3>
-          { inCart && (
-            <button className='cart-add' onClick={removeItem}>Remove from Cart</button>
-          )}
-          { !inCart && (
-            <button className='cart-add' onClick={addItem}>Add to Cart</button>
+          { user && (
+            <>
+              { inCart && (
+                <button className='cart-add' onClick={removeItem}>Remove from Cart</button>
+              )}
+              { !inCart && (
+                <button className='cart-add' onClick={addItem}>Add to Cart</button>
+              )}
+            </>
           )}
           <p>{item.description}</p>
         </div>
       </div>
 
       <div className='item-page-reviews'>
-        <h2>This is where reviews will go once I get to it</h2>
-        <p>does this not entertain the box-model gods?</p>
+        <Reviews item={item}/>
       </div>
     </div>
   )

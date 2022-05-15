@@ -13,6 +13,7 @@ class Item(db.Model):
 
   seller = db.relationship('User', back_populates='items')
   itemInCart = db.relationship('ItemsInCart', back_populates='item')
+  reviews = db.relationship('Review', back_populates='item', cascade='all, delete')
 
   def to_dict(self):
     pictures = ['']
