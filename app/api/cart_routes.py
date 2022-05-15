@@ -42,7 +42,13 @@ def updateCart():
     db.session.commit()
     return {'item': item.to_dict(), 'delete': False}
 
-@cart_routes.route('/delete')
+@cart_routes.route('/delete', methods=['DELETE'])
 @login_required
-def clearCart(id):
-  pass
+def clearCart():
+  data = request.get_json(force=True)
+  items = ItemsInCart.query.filter(ItemsInCart.cart_id == data)
+  for item in items:
+    db.session.delete(item)
+    db.session.commit()
+
+  return {'message': 'Cart Cleared'}

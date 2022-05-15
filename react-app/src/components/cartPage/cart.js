@@ -1,6 +1,6 @@
-import React/*, { useEffect }*/ from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeItemCount } from '../../store/cart';
+import { changeItemCount, emptyCart } from '../../store/cart';
 
 
 import './cart.css'
@@ -9,7 +9,12 @@ const CartPage = () => {
   const dispatch = useDispatch();
   const items = useSelector(state => state.items);
   const cart = useSelector(state => state.cart);
-  const IIC = cart.items;
+  const [IIC, setIIC] = useState(cart?.items);
+  const [checkedOut, setCheckedOut] = useState(false);
+
+  useEffect(() => {
+    setIIC(cart?.items)
+  }, [cart])
 
   const getTotal = () => {
     let total = 0;
@@ -45,20 +50,32 @@ const CartPage = () => {
     
     await dispatch( changeItemCount( modified ) );
   }
-  const handleClear = () => {
-    console.log('Cart Clear Clicked');
+  const handleClear = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    await dispatch( emptyCart(cart.id) );
   }
-  const handleCheckout = () => {
-    console.log('Checkout Clicked');
+  const handleCheckout = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    await dispatch( emptyCart(cart.id) );
+    setCheckedOut(true);
   }
 
   return (
     <>
       <div className='cart-wrapper'>
         <div className='cart-container'>
-          {IIC.length === 0 && (
+          {IIC?.length === 0 && (
             <div className='empty'>
-              Your Shopping Cart is Empty
+              { !checkedOut && (
+                "Your Shopping Cart is Empty"
+              )}
+              { checkedOut && (
+                "You've Checked Out"
+              )}
             </div>
           )}
           {IIC?.map(item => {
@@ -92,9 +109,14 @@ const CartPage = () => {
       <div className='summary'>
         <h2>Your Cart</h2>
         <div className='summary-items'>
-          {IIC.length === 0 && (
+          {IIC?.length === 0 && (
             <div className='summary-empty'>
-              Your Shopping Cart is Empty
+              { !checkedOut && (
+                "Your Shopping Cart is Empty"
+              )}
+              { checkedOut && (
+                "You've Checked Out"
+              )}
             </div>
           )}
           {IIC?.map(item => {

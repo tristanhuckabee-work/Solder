@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Popup from 'reactjs-popup';
-import { delItem } from '../../store/item';
-import { addToCart, changeItemCount } from '../../store/cart';
 
 import './page404.css';
 
