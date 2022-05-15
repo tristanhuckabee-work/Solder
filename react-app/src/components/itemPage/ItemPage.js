@@ -110,24 +110,27 @@ const ItemPage = () => {
             ></div>
             <h3>{seller.firstName} {seller.lastName}</h3>
           </div>
-          {item.seller_id === user?.id && (
-            <div className='seller-options'>
-              <Popup
-                trigger={<button className='item-delete'>Delete</button>}
-                modal
-              >
-                <div className='delete-confirm'>
-                  <p>Are You Sure?</p>
-                  <button onClick={deleteItem}>YES</button>
+          { user && (
+            <>
+              {item.seller_id === user?.id && (
+                <div className='seller-options'>
+                  <Popup
+                    trigger={<button className='item-delete'>Delete</button>}
+                    modal
+                  >
+                    <div className='delete-confirm'>
+                      <p>Are You Sure?</p>
+                      <button onClick={deleteItem}>YES</button>
+                    </div>
+                  </Popup>
+                  <button
+                    className='item-edit'
+                    onClick={updateItem}
+                  >EDIT</button>
                 </div>
-              </Popup>
-              <button
-                className='item-edit'
-                onClick={updateItem}
-              >EDIT</button>
-            </div>
-          )
-          }
+              )}
+            </>
+          )}
         </div>
         <div className='item-page-item-info'>
           <h2>{item.name}</h2>
