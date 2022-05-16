@@ -8,7 +8,7 @@ cart_routes = Blueprint('cart', __name__)
 @cart_routes.route('/new', methods=['POST'])
 @login_required
 def addToCart():
-  data = request.get_json()
+  data = request.get_json(force=True)
   print(f'\n\n\n{data}')
   
   itemInCart = ItemsInCart(
