@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useDispatch/*, useSelector*/ } from 'react-redux';
+import { useDispatch,/*, useSelector*/ 
+useSelector} from 'react-redux';
 
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import MainSplash from './components/Main/Main';
@@ -12,16 +13,21 @@ import CartPage from './components/cartPage/cart';
 import Page404 from './components/Page404/page404';
 
 import { authenticate } from './store/session';
+import { getAllItems } from './store/item';
+import { getCartItems } from './store/cart';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
+  const user = useSelector(state => state.session.user);
 
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());
       setLoaded(true);
     })();
+    dispatch(getAllItems());
+    dispatch(getCartItems(user?.id))
   }, [dispatch]);
 
   if (!loaded) {

@@ -18,7 +18,7 @@ const ItemPage = () => {
   const IIC  = cart.items;
   const item_id = window.location.pathname.split('/')[2];
   const item = useSelector(state => state.items[item_id]);
-  const seller = item.seller;
+  const seller = item?.seller;
   // if (item.pics === '') item.pics = ['https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg']
 
   const [focusedImage, setFocusedImage] = useState(item?.pics[0]);
@@ -115,13 +115,13 @@ const ItemPage = () => {
         <div className='item-page-user-info'>
           <div>
             <div className='seller-pic'
-              style={{backgroundImage: `url(${seller.profilePic})`}}
+              style={{backgroundImage: `url(${seller?.profilePic})`}}
             ></div>
-            <h3>{seller.firstName} {seller.lastName}</h3>
+            <h3>{seller?.firstName} {seller?.lastName}</h3>
           </div>
           { user && (
             <>
-              {item.seller_id === user?.id && (
+              {seller?.id === user?.id && (
                 <div className='seller-options'>
                   <Popup
                     trigger={<button className='item-delete'>Delete</button>}
@@ -142,8 +142,8 @@ const ItemPage = () => {
           )}
         </div>
         <div className='item-page-item-info'>
-          <h2>{item.name}</h2>
-          <h3>{item.price}</h3>
+          <h2>{item?.name}</h2>
+          <h3>{item?.price}</h3>
           { user && (
             <>
               { inCart && (
@@ -154,7 +154,7 @@ const ItemPage = () => {
               )}
             </>
           )}
-          <p>{item.description}</p>
+          <p>{item?.description}</p>
         </div>
       </div>
 
