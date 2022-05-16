@@ -1,25 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect, useHistory } from 'react-router-dom';
 
 import './ItemForm.css';
 import { newItem } from '../../store/item';
-// import '../auth/textAreaScroll.css'
 
 const CreateItemForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(state => state.session.user)
+
   const [errors, setErrors] = useState([]);
-  const [name, setName] = useState();
+  const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState('');
   const [pics, setPics] = useState('');
   const defaultImage = 'https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg'
   const [focusedImage, setFocusedImage] = useState(defaultImage)
 
+
+  const checkValid = () => {
+    let invalid = [];
+
+    if (name === '') invalid.push('Name is Required');
+    if (description === '') invalid.push('Description is Required');
+    if (price === '') invalid.push('Price is Required');
+    if (Number(price) < 0) invalid.push('Price must be Non-Negative');
+    if (Number(price) > 999.99) invalid.push('Price must be less than 1,000.00');
+
+    setErrors(invalid);
+  }
+  useEffect(() => {
+    checkValid();
+  }, [name, description, price])
+
   const onSubmit = async (e) => {
     e.preventDefault()
+
     const item = {
       owner_id: user.id,
       name,
@@ -29,20 +46,62 @@ const CreateItemForm = () => {
     }
 
     const newest = await dispatch(newItem(item));
-    if (newest?.errors) {
-      setErrors(newest.errors);
-    } else {
-      newest.pics = newest.pics.split(',')
-      history.push({
-        pathname: `/items/${newest.id}`,
-        state: newest
-      });
-    }
+    newest.pics = newest.pics.split(',')
+    history.push({
+      pathname: `/items/${newest.id}`,
+      state: newest
+    });
   }
 
   const updateName = (e) => setName(e.target.value);
   const updateDescription = (e) => setDescription(e.target.value);
-  const updatePrice = (e) => setPrice(e.target.value);
+  const updatePrice = (e) => {
+    let nonNumber = '';
+    let accepted = '0123456789.';
+    e.target.value.split('').forEach(char => {
+      if (!accepted.includes(char)) {
+        if (char === ',') {
+          nonNumber = 'c'
+        } else if (char === '-') {
+          nonNumber = 'b'
+        } else {
+          nonNumber = 'n'
+        }
+      }
+    });
+
+    let invalid = []
+    if (nonNumber === 'n') {
+      if (errors.includes('Price must be a number')) {
+        return;
+      } else {
+        invalid.push('Price must be a number')
+      }
+    } else if (nonNumber === 'c') {
+      if (errors.includes('Please exclude commas')) {
+        return;
+      } else {
+        invalid.push('Please exclude commas')
+      }
+    } else if (nonNumber === 'b') {
+      if (errors.includes('Price must be positive')) {
+        return;
+      } else {
+        invalid.push('Price must be positive')
+      }
+    } else if (Number(e.target.value) > 999.99) {
+      if (errors.includes('Price must be less than 1,000.00')) {
+        return;
+      } else {
+        invalid.push('Price must be less than 1,000.00')
+      }
+    } else if (nonNumber === '') {
+      setErrors(errors.concat(invalid));
+      setPrice(e.target.value);
+      return;
+    }
+    setErrors(errors.concat(invalid));
+  }
   const updateImages = async (e) => {
     e.preventDefault();
 
@@ -133,7 +192,7 @@ const CreateItemForm = () => {
             name='price'
             onChange={updatePrice}
             value={price}
-            placeholder='Price <<$##.##>>'
+            placeholder='Price 000.00 - 999.99'
           ></input>
         </div>
         <div>
@@ -144,7 +203,12 @@ const CreateItemForm = () => {
             multiple
           />
         </div>
-        <button type='submit'>Create Item</button>
+        {!errors.length && (
+          <button type='submit'>Create Item</button>
+        )}
+        {errors.length && (
+          <p className='invalid-form'>Please Correct Errors</p>
+        )}
       </form>
     </div>
   )
