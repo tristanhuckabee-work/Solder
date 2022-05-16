@@ -31,7 +31,7 @@ def upload_image():
 @login_required
 def createItem():
   form = CreateItemForm()
-  data = request.get_json()
+  data = request.get_json(force=True)
   form['csrf_token'].data = request.cookies['csrf_token']
   if form.validate_on_submit():
     item = Item(
@@ -59,12 +59,9 @@ def getAllItem():
 @item_routes.route('/<int:id>/edit', methods=['PATCH'])
 @login_required
 def updateItem(id):
-  # form = EditItemForm()
   data = request.get_json(force=True)
   print(f'\n\n{data}\n\n')
 
-  # form['csrf_token'].data = request.cookies['csrf_token']
-  # if form.validate_on_submit():
   item = Item.query.get(id)
 
   item.name = data['name']
@@ -75,14 +72,12 @@ def updateItem(id):
   db.session.commit()
 
   return item.to_dict()
-  # else:
-  #   errors = [form.errors[error] for error in form.errors]
-  #   return { 'errors': errors }
 
 @item_routes.route('/<int:id>/delete', methods=['DELETE'])
 @login_required
 def deleteItem(id):
-  id = request.get_json(force=True)
+  print('\n\nINSIDE ROUTE\n\n')
+  # id = request.get_json(force=True)
   item = Item.query.get(id)
 
   db.session.delete(item)
