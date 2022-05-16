@@ -46,9 +46,10 @@ def updateCart():
 @login_required
 def clearCart():
   data = request.get_json(force=True)
+  cart = Cart.query.get(data)
   items = ItemsInCart.query.filter(ItemsInCart.cart_id == data)
   for item in items:
     db.session.delete(item)
     db.session.commit()
 
-  return {'message': 'Cart Cleared'}
+  return cart.to_dict()

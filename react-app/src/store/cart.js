@@ -9,15 +9,12 @@ const updateCart = payload => ({ type: UPDATE, payload })
 const clearCart = payload => ({ type: DELETE, payload })
 
 export const addToCart = payload => async dispatch => {
-  console.log('INSIDE:', payload);
   const res = await fetch('/api/cart/new', {
     method: 'POST',
     body: JSON.stringify(payload),
     headers: { 'Content-Type': 'application/json' }
   });
-  console.log('INSIDE RES:', res);
   const data = await res.json();
-  console.log('INSIDE DATA:', data);
 
   dispatch(addItem(data));
   return data;
@@ -38,7 +35,6 @@ export const changeItemCount = payload => async dispatch => {
   await dispatch(updateCart(data));
 }
 export const emptyCart = id => async dispatch => {
-  console.log('INSIDE:', id);
   const res = await fetch('/api/cart/delete', {
     method: 'DELETE',
     body: JSON.stringify(id),
@@ -78,7 +74,7 @@ const CartReducer = (state = initialState, action) => {
         }
       }
     case DELETE:
-      return initialState;
+      return action.payload;
     default:
       return state;
   }
