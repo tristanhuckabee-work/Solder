@@ -19,16 +19,18 @@ import { getCartItems } from './store/cart';
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector(state => state.session.user);
+  const user = useSelector(state => state.session.user)
 
   useEffect(() => {
     (async () => {
-      await dispatch(authenticate());
+      await dispatch(authenticate())
       setLoaded(true);
     })();
     dispatch(getAllItems());
-    dispatch(getCartItems(user?.id))
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(getCartItems(user?.id))
+  }, [user])
 
   if (!loaded) {
     return null;
