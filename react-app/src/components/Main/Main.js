@@ -6,21 +6,12 @@ import ItemCard from '../itemCard/itemCard';
 import Popup from 'reactjs-popup';
 import LoginForm from '../auth/LoginForm'
 
-// import { getAllItems } from '../../store/item';
-// import { getCartItems } from '../../store/cart';
-
 import './Main.css'
 
 const MainSplash = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
   const items = useSelector(state => state.items.items);
-
-  useEffect(() => {
-    // dispatch(getAllItems());
-    // if (user) dispatch(getCartItems(user?.id))
-  }, [dispatch, user])
 
   const createItem = () => history.push('/items/new');
 

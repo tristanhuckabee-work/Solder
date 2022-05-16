@@ -28,7 +28,6 @@ export const getAllItems = () => async dispatch => {
   dispatch( getItems( data ) );
 }
 export const editItem = (item) => async dispatch => {
-  console.log('INSIDE EDIT:', item);
   const res = await fetch(`/api/items/${item.id}/edit`, {
     method: 'PATCH',
     body: JSON.stringify(item),
@@ -59,21 +58,35 @@ const ItemReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE:
       newState = { ...state };
-      return state;
+
+      newState[action.payload.id] = action.payload;
+      newState.items.push(action.payload);
+
+      return newState;
     case ITEMS:
       newState = { ...state, ...action.payload}
+
       action.payload.items?.forEach(item => newState[item.id] = item)
         
       return newState;
     case UPDATE:
       newState = { ...state }
+
       newState[action.payload.id] = action.payload;
       newState.items.forEach((item, i) => {
-        if (item.id === action.payload.id) newState.items.splice(i, 1, action.payload )
+        if (item.id === action.payload.id) newState.items.splice(i, 1, action.payload);
       })
+
       return newState;
     case DELETE:
-      return state;
+      newState = { ...state }
+      
+      delete newState[action.payload.id];
+      newState.items.forEach((item, i) => {
+        if (item.id === action.payload.id) newState.items.splice(i, 1);
+      })
+
+      return newState;
     default:
       return state;
   }
