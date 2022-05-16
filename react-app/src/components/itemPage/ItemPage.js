@@ -19,8 +19,7 @@ const ItemPage = () => {
   const item_id = window.location.pathname.split('/')[2];
   const item = useSelector(state => state.items[item_id]);
   const seller = item?.seller;
-  // if (item.pics === '') item.pics = ['https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg']
-
+  
   const [focusedImage, setFocusedImage] = useState(item?.pics[0]);
   const [inCart, setInCart] = useState(false);
 
