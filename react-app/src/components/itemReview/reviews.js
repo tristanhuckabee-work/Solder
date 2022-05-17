@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { newReview } from '../../store/review';
+
 import Popup from 'reactjs-popup';
 import EditModal from './editModal.js';
-import { newReview, editReview, delReview } from '../../store/review';
+import DeleteModal from './deleteModal.js';
+import ReviewStatus from './reviewStatus';
+
 
 import './reviews.css';
-import DeleteModal from './deleteModal.js';
 
 const Reviews = ({ item }) => {
   const dispatch = useDispatch();
@@ -90,7 +93,7 @@ const Reviews = ({ item }) => {
 
   return (
     <>
-      <div className='review-status'>
+      {/* <div className='review-status'>
         {!reviews?.length && (
           <>
             <h2>This item hasn't been reviewed yet</h2>
@@ -109,7 +112,8 @@ const Reviews = ({ item }) => {
             <div className='rating'>{showStars(avg)}</div>
           </div>
         )}
-      </div>
+      </div> */}
+      <ReviewStatus reviews={reviews} />
       {user && (<form className='review-form' onSubmit={addReview}>
         <div className='review-input'>
           <input
