@@ -115,7 +115,7 @@ const Reviews = ({ item }) => {
           <input
             name='content'
             type='text'
-            placeholder={`${user.firstName} thinks...`}
+            placeholder={`${user?.firstName} thinks...`}
             value={content}
             onChange={updateContent}
           />
