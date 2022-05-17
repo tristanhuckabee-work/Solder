@@ -125,7 +125,7 @@ const Reviews = ({ item }) => {
       </form>
       <div className='reviews-container'>
         {reviews?.map(review => {
-          const poster = review.user;
+          const poster = review?.user;
           return (
             <div className='review' key={review?.id}>
               <div className='review-opts'>
@@ -133,7 +133,7 @@ const Reviews = ({ item }) => {
                   className='review-user-pic'
                   style={{ backgroundImage: `url(${poster?.profilePic})` }}
                 ></div>
-                {poster.id === user.id && (
+                {poster?.id === user?.id && (
                   <div className='review-user-opts'>
                     <i className='fas fa-trash' />
                     <i className='fas fa-square-pen' />
