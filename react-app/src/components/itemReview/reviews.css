@@ -95,3 +95,13 @@ form.review-form button {
   padding-right: 5px;
 }
 .small {font-size: .8em; color: var(--black-op)}
+
+/* EDIT MODAL */
+.edit-modal {
+  background-color: var(--white);
+  border-radius: 3px;
+  padding: 10px;
+}
+.edit-modal { color: var(--black-op) }
+
+/* DELETE MODAL */

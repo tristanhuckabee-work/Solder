@@ -25,7 +25,17 @@ export const getReviews = item_id => async dispatch => {
 
   dispatch( getAllReviews( data ) );
 }
-export const editReview = review => async dispatch => {}
+export const editReview = review => async dispatch => {
+  const {item_id, id} = review;
+  const res = await fetch(`/api/reviews/${item_id}/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(review),
+    headers: {'Content-Type':'application/json'}
+  });
+  const data = await res.json();
+
+  dispatch( updateReview( data ) );
+}
 export const delReview  = review => async dispatch => {}
 
 const initialState = {};
@@ -47,9 +57,23 @@ const ReviewReducer = (state = initialState, action) => {
       
       return newState;
     case UPDATE:
-      return newState = {...state, action:'UPDATE'};
+      newState = {...state};
+
+      newState[action.payload.id] = action.payload;
+      newState.reviews.forEach((review, i) => {
+        if (review.id === action.payload.id) newState.reviews.splice(i, 1, action.payload);
+      })
+
+      return newState;
     case DELETE:
-      return newState = {...state, action:'DELETE'};
+      newState = { ...state }
+      
+      delete newState[action.payload.id];
+      newState.reviews.forEach((review, i) => {
+        if (review.id === action.payload.id) newState.reviews.splice(i, 1);
+      })
+
+      return newState;
     default:
       return state;
   }

@@ -27,7 +27,6 @@ def createReview():
   else:
     return {'message': 'naw fam'}
 
-
 @review_routes.route('/<int:item>')
 def getItemReviews(item):
   reviews = Review.query.filter(Review.item_id == item).all()
@@ -36,7 +35,15 @@ def getItemReviews(item):
 @review_routes.route('/<int:item>/<int:id>', methods=['PATCH'])
 @login_required
 def updateReview(item, id):
-  pass
+  data = request.get_json(force=True)
+  review = Review.query.get(id)
+
+  review.content=data['content']
+  review.rating =data['rating']
+  db.session.commit()
+
+  return review.to_dict()
+
 
 @review_routes.route('/<int:item>/<int:id>', methods=['DELETE'])
 @login_required

@@ -36,7 +36,6 @@ export const editItem = (item) => async dispatch => {
   const data = await res.json();
 
   dispatch( updateItem( data ) );
-  return data;
 }
 export const delItem = id => async dispatch => {
   const res = await fetch(`/api/items/${id}/delete`, {
