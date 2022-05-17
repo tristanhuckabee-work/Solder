@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { newReview } from '../../store/review';
+import Popup from 'reactjs-popup';
+import EditModal from './editModal.js';
+import { newReview, editReview, delReview } from '../../store/review';
 
 import './reviews.css';
 
@@ -67,7 +69,7 @@ const Reviews = ({ item }) => {
       )
     }
   }
-
+  
   const addReview = async (e) => {
     e.preventDefault()
 
@@ -107,10 +109,7 @@ const Reviews = ({ item }) => {
           </div>
         )}
       </div>
-      <form className='review-form' onSubmit={addReview}>
-        {errors.map((error, i) => (
-          <div key={i}>{error}</div>
-        ))}
+      {user && (<form className='review-form' onSubmit={addReview}>
         <div className='review-input'>
           <input
             name='content'
@@ -123,9 +122,12 @@ const Reviews = ({ item }) => {
         </div>
         <button onClick={addReview}>Submit</button>
       </form>
+      )}
       <div className='reviews-container'>
         {reviews?.map(review => {
           const poster = review?.user;
+          const rt = review?.updated_at.split(' ');
+          const displayTime = `${rt[2]} ${rt[1]} ${rt[3]}`
           return (
             <div className='review' key={review?.id}>
               <div className='review-opts'>
@@ -136,7 +138,7 @@ const Reviews = ({ item }) => {
                 {poster?.id === user?.id && (
                   <div className='review-user-opts'>
                     <i className='fas fa-trash' />
-                    <i className='fas fa-square-pen' />
+                    <EditModal review={review}/>
                   </div>
                 )}
               </div>
@@ -146,7 +148,7 @@ const Reviews = ({ item }) => {
                   <p>{showStars(review?.rating)}</p>
                 </div>
                 <p>{review?.content}</p>
-                <p className='small'>{review?.updated_at}</p>
+                <p className='small'>{displayTime}</p>
               </div>
             </div>
           )
