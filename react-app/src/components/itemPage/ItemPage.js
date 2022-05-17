@@ -27,7 +27,7 @@ const ItemPage = () => {
     (async () => {
       await dispatch( getReviews(item_id) )
     })()
-  }, [dispatch])
+  }, [dispatch, item_id])
 
   const checkIfInCart = () => {
     const ids = IIC?.map(item => item.item_id)

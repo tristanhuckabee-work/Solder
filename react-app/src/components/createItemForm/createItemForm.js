@@ -203,12 +203,11 @@ const CreateItemForm = () => {
             multiple
           />
         </div>
-        {!errors.length && (
+        {( !errors.length && (
           <button type='submit'>Create Item</button>
-        )}
-        {errors.length && (
+        )) || (errors.length && (
           <p className='invalid-form'>Please Correct Errors</p>
-        )}
+        ))}
       </form>
     </div>
   )

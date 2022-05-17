@@ -8,7 +8,17 @@ const getAllReviews= payload => ({ type: REVIEWS, payload})
 const updateReview = payload => ({ type: UPDATE, payload})
 const deleteReview = payload => ({ type: DELETE, payload})
 
-export const newReview  = review => async dispatch => {}
+export const newReview  = review => async dispatch => {
+  const res = await fetch('/api/reviews/new', {
+    method: 'POST',
+    body: JSON.stringify(review),
+    headers: {'Content-Type':'application/json'}
+  });
+  const data = await res.json();
+
+  dispatch( createReview( data ) );
+  return data;
+}
 export const getReviews = item_id => async dispatch => {
   const res = await fetch(`/api/reviews/${item_id}`);
   const data= await res.json();
@@ -24,7 +34,11 @@ const ReviewReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case CREATE:
-      return newState = {...state, action:'CREATE'};
+      newState = {...state};
+      newState[action.payload.id] = action.payload;
+      newState.reviews.push(action.payload);
+
+      return newState;
     case REVIEWS:
       newState = {...action.payload};
       action?.payload?.reviews?.forEach(review => {
