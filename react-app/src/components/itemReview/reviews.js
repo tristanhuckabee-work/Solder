@@ -5,6 +5,7 @@ import EditModal from './editModal.js';
 import { newReview, editReview, delReview } from '../../store/review';
 
 import './reviews.css';
+import DeleteModal from './deleteModal.js';
 
 const Reviews = ({ item }) => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const Reviews = ({ item }) => {
 
   const [avg, setAvg] = useState();
   const [errors, setErrors] = useState([]);
-  const [content, setContent] = useState();
+  const [content, setContent] = useState('');
   const [userRating, setUserRating] = useState(5);
 
   const getAverageRating = () => {
@@ -137,8 +138,8 @@ const Reviews = ({ item }) => {
                 ></div>
                 {poster?.id === user?.id && (
                   <div className='review-user-opts'>
-                    <i className='fas fa-trash' />
-                    <EditModal review={review}/>
+                    <DeleteModal review={review} />
+                    <EditModal review={review} />
                   </div>
                 )}
               </div>

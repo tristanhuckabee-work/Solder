@@ -36,7 +36,19 @@ export const editReview = review => async dispatch => {
 
   dispatch( updateReview( data ) );
 }
-export const delReview  = review => async dispatch => {}
+export const delReview  = id => async dispatch => {
+  console.log('INSIDE', id);
+  const res = await fetch(`/api/reviews/${id}`, {
+    method: 'DELETE',
+    body: JSON.stringify(id),
+    headers: {'Content-Type':'application/json'}
+  });
+  console.log('INSIDE RES', res);
+  const data = await res.json();
+  console.log('INSIDE DATA', data);
+
+  dispatch( deleteReview(data) );
+}
 
 const initialState = {};
 const ReviewReducer = (state = initialState, action) => {

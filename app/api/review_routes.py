@@ -45,7 +45,13 @@ def updateReview(item, id):
   return review.to_dict()
 
 
-@review_routes.route('/<int:item>/<int:id>', methods=['DELETE'])
+@review_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
-def deleteReview(item, id):
-  pass
+def deleteReview(id):
+  data = request.get_json(force=True)
+  review = Review.query.get(int(data))
+
+  db.session.delete(review)
+  db.session.commit()
+
+  return {'id': id}
