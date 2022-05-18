@@ -1,11 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-
 import './page404.css';
 
 const Page404 = () => {
   const history = useHistory();
-
   const backToSafety = () => {
     history.push('/');
   }
