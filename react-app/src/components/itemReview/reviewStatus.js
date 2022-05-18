@@ -1,17 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { newReview } from '../../store/review';
-
-import Popup from 'reactjs-popup';
-import EditModal from './editModal.js';
-import DeleteModal from './deleteModal.js';
-
-
+import React, { useEffect, useState } from 'react';
 import './reviews.css';
 
-const ReviewStatus = ({ reviews }) => {
+const ReviewStatus = ({ reviews, reviewState }) => {
   const [avg, setAvg] = useState();
 
+  const getAverageRating = () => {
+    if (reviews?.length) {
+      return Math.round(reviews.reduce((accum, review) => {
+        return accum += review.rating;
+      }, 0) / reviews?.length);
+    } else {
+      return 0;
+    }
+  }
   const showStars = (rating) => {
     const blankStars = 5 - rating;
     if (rating) {
@@ -31,6 +32,10 @@ const ReviewStatus = ({ reviews }) => {
       )
     }
   }
+
+  useEffect(() => {
+    setAvg(getAverageRating());
+  }, [reviewState])
 
   return (
     <div className='review-status'>
