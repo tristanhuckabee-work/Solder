@@ -200,7 +200,7 @@ const EditItemForm = () => {
             name='price'
             onChange={updatePrice}
             value={price}
-            placeholder='Price <<$##.##>>'
+            placeholder='Price 000.00 - 999.99'
           ></input>
         </div>
         <button onClick={clearImages}>Clear Images</button>
