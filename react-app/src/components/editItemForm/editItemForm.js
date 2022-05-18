@@ -49,7 +49,8 @@ const EditItemForm = () => {
     }
 
     const edited = await dispatch(editItem(editedItem));
-    edited.pics = edited.pics.split(',')
+    const picArr = edited.pics.split(',');
+    edited.pics = picArr;
     history.push({
       pathname: `/items/${edited.id}`,
       state: edited
