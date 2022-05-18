@@ -60,7 +60,6 @@ def getAllItem():
 @login_required
 def updateItem(id):
   data = request.get_json(force=True)
-  print(f'\n\n{data}\n\n')
 
   item = Item.query.get(id)
 
@@ -76,8 +75,6 @@ def updateItem(id):
 @item_routes.route('/<int:id>/delete', methods=['DELETE'])
 @login_required
 def deleteItem(id):
-  print('\n\nINSIDE ROUTE\n\n')
-  # id = request.get_json(force=True)
   item = Item.query.get(id)
 
   db.session.delete(item)

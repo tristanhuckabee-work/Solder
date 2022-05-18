@@ -13,7 +13,6 @@ def createReview():
   data = request.get_json(force=True)
   form['csrf_token'].data = request.cookies['csrf_token']
   if form.validate_on_submit:
-    print(f'\n\n{data}\n\n')
     review = Review(
       item_id=data['item_id'],
       user_id=data['user_id'],

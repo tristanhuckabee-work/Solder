@@ -9,7 +9,6 @@ cart_routes = Blueprint('cart', __name__)
 @login_required
 def addToCart():
   data = request.get_json(force=True)
-  print(f'\n\n\n{data}')
   
   itemInCart = ItemsInCart(
     item_id=data['item_id'],

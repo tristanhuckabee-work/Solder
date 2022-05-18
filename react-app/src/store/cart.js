@@ -41,7 +41,6 @@ export const emptyCart = id => async dispatch => {
     header: { 'Content-Type': 'application/json' }
   })
   const data = await res.json()
-  console.log('INSIDE DATA:', data)
   await dispatch(clearCart(data));
 }
 

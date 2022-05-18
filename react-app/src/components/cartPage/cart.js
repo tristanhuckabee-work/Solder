@@ -38,14 +38,12 @@ const CartPage = () => {
         cart_id: Number(args[1]),
         count:   Number(args[3]) - 1
       }
-      console.log('minus', modified);
     } else {
       modified = {
         item_id: Number(args[2]),
         cart_id: Number(args[1]),
         count:   Number(args[3]) + 1
       }
-      console.log('plus', modified);
     }
     
     await dispatch( changeItemCount( modified ) );

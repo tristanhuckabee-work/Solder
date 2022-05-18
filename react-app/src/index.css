@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
 
 :root {
-  --yellow:     #ffbd00;
-  --yellow-op:  #ffbd0088;
+  --true-white: #ffffff;
   --white:      #eeeeee;
   --white-op:   #eeeeee88;
-  --true-white: #ffffff;
   --black:      #202020;
   --black-op:   #20202088;
   --red:        #880000;
   --red-op:     #88000088;
+  --yellow:     #ffbd00;
+  --yellow-op:  #ffbd0088;
   --no-color:   #00000000;
   margin: 0;
   box-sizing: border-box;

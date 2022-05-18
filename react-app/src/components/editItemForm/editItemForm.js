@@ -200,7 +200,7 @@ const EditItemForm = () => {
             name='price'
             onChange={updatePrice}
             value={price}
-            placeholder='Price <<$##.##>>'
+            placeholder='Price 000.00 - 999.99'
           ></input>
         </div>
         <button onClick={clearImages}>Clear Images</button>
@@ -212,11 +212,16 @@ const EditItemForm = () => {
             multiple
           />
         </div>
-        {!errors.length && (
-          <button type='submit'>Create Item</button>
-        )}
-        {errors.length && (
-          <p className='invalid-form'>Please Correct Errors</p>
+        {(
+          !errors.length && (
+            <button type='submit'>Create Item</button>
+          )
+        )
+        ||
+        (
+          errors.length && (
+            <p className='invalid-form'>Please Correct Errors</p>
+          )
         )}
       </form>
     </div>
