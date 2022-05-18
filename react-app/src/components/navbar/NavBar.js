@@ -8,6 +8,7 @@ import LoginForm from '../auth/LoginForm';
 import SignUpForm from '../auth/SignUpForm';
 
 import './NavBar.css'
+import About from './about';
 
 const NavBar = () => {
   const history = useHistory();
@@ -136,6 +137,7 @@ const NavBar = () => {
             >
               <div className='user-link-options'>
                 <p>{user?.firstName} {user?.lastName}</p>
+                <About />
                 <LogoutButton />
               </div>
             </Popup>

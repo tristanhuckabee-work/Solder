@@ -127,3 +127,21 @@ header a:hover { color: var(--yellow) }
 .search-match:hover {
   background-color: #cccccc;
 }
+
+.about {
+  align-items: center;
+  background-color: var(--white);
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 5px;
+  padding: 5px 0;
+  width: 100%;
+}
+.about a {
+  color: var(--black);
+  text-decoration: none;
+}
+.about a:hover {
+  color: var(--yellow);
+}

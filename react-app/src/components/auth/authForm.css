@@ -51,7 +51,14 @@ form button:hover {
   display: flex;
   flex-direction: column;
 }
-.logout { cursor: pointer }
+.logout { 
+  cursor: pointer;
+  background-color: var(--white);
+  border-radius: 3px;
+  padding: 5px 0;
+  text-align: center;
+  width: 100%;
+}
 .logout:hover { color:var(--yellow) }
 
 
