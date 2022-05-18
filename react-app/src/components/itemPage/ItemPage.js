@@ -6,7 +6,6 @@ import { addToCart, changeItemCount } from '../../store/cart';
 import { getReviews } from '../../store/review';
 import Reviews from '../itemReview/reviews';
 import Popup from 'reactjs-popup';
-
 import './ItemPage.css';
 
 const ItemPage = () => {
@@ -14,7 +13,6 @@ const ItemPage = () => {
   const history = useHistory();
   const user = useSelector(state => state.session.user);
   const cart = useSelector(state => state.cart);
-  const reviews = useSelector(state => state.reviews.reviews);
   const IIC  = cart.items;
   const item_id = window.location.pathname.split('/')[2];
   const item = useSelector(state => state.items[item_id]);
