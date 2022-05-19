@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect, useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
@@ -20,8 +20,15 @@ const SignUpForm = () => {
   const onSignUp = async (e) => {
     e.preventDefault();
 
-    if (password !== repeatPassword) {
-      setErrors(['Passwords Must Match'])
+    let invalid = [];
+    let extension = profile_pic.split('.');
+    const acceptable = 'jpg,png,jpeg';
+
+    if (password !== repeatPassword) invalid.push('Passwords Must Match');
+    if ( !acceptable.includes(extension[extension.length - 1]) && profile_pic !== '' ) invalid.push('Profile Pic must be a JPG, PNG, or JPEG');
+
+    if ( invalid.length ) {
+      setErrors(invalid);
     } else {
       const data = await dispatch(signUp(firstName, lastName, email, password, profile_pic));
       if (data) {
@@ -97,14 +104,17 @@ const SignUpForm = () => {
           placeholder='Repeat Password'
         ></input>
       </div>
-      <div>
+      <div className='new-picture'>
         <input
           type='text'
           name='profile_pic'
           onChange={updateProfilePic}
           value={profile_pic}
-          placeholder='Profile Picture (Optional)'
+          placeholder='Profile Picture URL (Optional)'
         ></input>
+        <div className='pic-preview'
+          style={{backgroundImage: `url(${profile_pic})`}}
+        />
       </div>
       <button type='submit'>Sign Up</button>
     </form>

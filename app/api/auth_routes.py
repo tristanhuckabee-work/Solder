@@ -63,13 +63,14 @@ def sign_up():
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         default_pic = 'https://res.cloudinary.com/dzsgront4/image/upload/v1652205992/IT000012498930-e1426124271973_eypgul.jpg'
-        
+        data=request.get_json(force=True)
+        print(f'\n\n{data}\n\n')
         user = User(
             firstName = form.data['firstName'],
             lastName = form.data['lastName'],
             email=form.data['email'],
             password=form.data['password'],
-            profilePic=form.data['profilePic'] or default_pic
+            profilePic=data['profile_Pic'] or default_pic
         )
         db.session.add(user)
         db.session.commit()
