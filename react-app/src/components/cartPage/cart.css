@@ -124,6 +124,13 @@
   margin: 5px;
 }
 
+.summary-item h3 {
+  max-height: 30px;
+  max-width: 275px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .summary-items div {
   align-items: center;
   display: flex;

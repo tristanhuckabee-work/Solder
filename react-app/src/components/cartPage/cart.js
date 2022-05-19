@@ -21,7 +21,7 @@ const CartPage = () => {
     IIC?.forEach(item => {
       total += parseFloat(items[item?.item_id]?.price.split('$')[1]) * item.count;
     })
-    return `$${total}`;
+    return `$${total.toFixed(2)}`;
   }
   const changeCount = async (e) => {
     e.preventDefault();
@@ -122,7 +122,7 @@ const CartPage = () => {
             return (
               <div key={curr.id} className='summary-item'>
                 <h3>{curr?.name}</h3>
-                <p>{`$${Number(curr?.price.split('$')[1]) * item.count}`}</p>
+                <p>{`$${(Number(curr?.price.split('$')[1]) * item.count).toFixed(2)}`}</p>
               </div>
             )
           })}

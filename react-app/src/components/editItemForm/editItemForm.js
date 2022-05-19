@@ -29,7 +29,7 @@ const EditItemForm = () => {
     if (description === '') invalid.push('Description is Required');
     if (price === '') invalid.push('Price is Required');
     if (Number(price) < 0) invalid.push('Price must be Non-Negative');
-    if (Number(price) > 999.99) invalid.push('Price must be less than 1,000.00');
+    if (Number(price) >= 1000.00) invalid.push('Price must be less than 1,000.00');
 
     setErrors(invalid);
   }
@@ -44,7 +44,7 @@ const EditItemForm = () => {
       id: item.id,
       name,
       description,
-      price,
+      price: `${Number(price).toFixed(2)}`,
       pics: pics || defaultImage
     }
 
@@ -64,9 +64,7 @@ const EditItemForm = () => {
     let accepted = '0123456789.';
     e.target.value.split('').forEach(char => {
       if (!accepted.includes(char)) {
-        if (char === ',') {
-          nonNumber = 'c'
-        } else if (char === '-') {
+        if (char === '-') {
           nonNumber = 'b'
         } else {
           nonNumber = 'n'
@@ -81,12 +79,6 @@ const EditItemForm = () => {
       } else {
         invalid.push('Price must be a number')
       }
-    } else if (nonNumber === 'c') {
-      if (errors.includes('Please exclude commas')) {
-        return;
-      } else {
-        invalid.push('Please exclude commas')
-      }
     } else if (nonNumber === 'b') {
       if (errors.includes('Price must be positive')) {
         return;
@@ -99,7 +91,7 @@ const EditItemForm = () => {
       } else {
         invalid.push('Price must be less than 1,000.00')
       }
-    } else if (nonNumber === '') {
+    } else if (nonNumber === '' && e.target.value.length <= 6) {
       setErrors(errors.concat(invalid));
       setPrice(e.target.value);
       return;
@@ -215,7 +207,7 @@ const EditItemForm = () => {
         </div>
         {(
           !errors.length && (
-            <button type='submit'>Create Item</button>
+            <button type='submit'>Update Item</button>
           )
         )
         ||
