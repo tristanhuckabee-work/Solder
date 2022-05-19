@@ -9,11 +9,9 @@ const About = () => {
     <div className='about'>
       <a href={li} target='_blank'>
         <i className='fab fa-linkedin fa-2x' />
-        LinkedIn
       </a>
       <a href={gh} target='_blank'>
         <i className='fab fa-github-square fa-2x' />
-        Github
       </a>
     </div>
   )
