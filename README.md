@@ -22,5 +22,6 @@ This is a website for buying and selling refurbished or custom electronics and a
 
 ## Key Functions
 A user is able to buy, sell and review items.
+![main](https://user-images.githubusercontent.com/87467157/169310879-f13f587f-05b1-4682-a703-b5f038e8eeda.PNG)
 ![item-login](https://user-images.githubusercontent.com/87467157/169153535-e57b7d0d-3e69-4459-a52f-f20cde4400fb.PNG)
 ![cart-ss](https://user-images.githubusercontent.com/87467157/169153977-cebde8c0-3359-4039-9068-4fc83be94ddb.PNG)
