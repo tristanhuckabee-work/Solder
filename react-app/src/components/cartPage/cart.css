@@ -161,3 +161,10 @@
 .cart-checkout h3 {
   grid-area: 1/1/2/3
 }
+
+#emptyModal {
+  background-color: var(--white);
+  border-radius: 5px;
+  color: var(--red);
+  padding: 10px 20px;
+}

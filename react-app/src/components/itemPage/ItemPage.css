@@ -66,6 +66,10 @@
 .item-page-user-info, .item-page-item-info {
   width: 100%;
 }
+.item-page-item-info {
+  word-wrap: break-word;
+  word-break: break-all;
+}
 .item-page-user-info > div {
   align-items: center;
   display: flex;

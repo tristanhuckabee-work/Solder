@@ -87,6 +87,10 @@ form.review-form button {
 .review-contents {
   width: calc(100% - 50px);
 }
+.review-contents p {
+  word-wrap: break-word;
+  word-break: break-all;
+}
 .review-head {
   align-items: center;
   border-bottom: 1px solid var(--black-op);

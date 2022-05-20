@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeItemCount, emptyCart } from '../../store/cart';
+import Popup from 'reactjs-popup';
 
 
 import './cart.css'
@@ -11,11 +12,13 @@ const CartPage = () => {
   const cart = useSelector(state => state.cart);
   const [IIC, setIIC] = useState(cart?.items);
   const [checkedOut, setCheckedOut] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setIIC(cart?.items)
   }, [cart])
 
+  const toggleModal = () => setOpen(!open);
   const getTotal = () => {
     let total = 0;
     IIC?.forEach(item => {
@@ -30,37 +33,46 @@ const CartPage = () => {
     const args = e.target.id.split(' ');
 
     let modified;
-      
+
 
     if (args[0] === 'minus') {
       modified = {
         item_id: Number(args[2]),
         cart_id: Number(args[1]),
-        count:   Number(args[3]) - 1
+        count: Number(args[3]) - 1
       }
     } else {
       modified = {
         item_id: Number(args[2]),
         cart_id: Number(args[1]),
-        count:   Number(args[3]) + 1
+        count: Number(args[3]) + 1
       }
     }
-    
-    await dispatch( changeItemCount( modified ) );
+
+    await dispatch(changeItemCount(modified));
   }
   const handleClear = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    await dispatch( emptyCart(cart.id) );
+    if (IIC.length > 0) {
+      await dispatch(emptyCart(cart.id));
+    } else {
+      toggleModal();
+    }
   }
   const handleCheckout = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    await dispatch( emptyCart(cart.id) );
-    setCheckedOut(true);
+    if (IIC.length > 0) {
+      await dispatch(emptyCart(cart.id));
+      setCheckedOut(true);
+    } else {
+      toggleModal();
+    }
   }
+
 
   return (
     <>
@@ -68,10 +80,10 @@ const CartPage = () => {
         <div className='cart-container'>
           {IIC?.length === 0 && (
             <div className='empty'>
-              { !checkedOut && (
+              {!checkedOut && (
                 "Your Shopping Cart is Empty"
               )}
-              { checkedOut && (
+              {checkedOut && (
                 "You've Checked Out"
               )}
             </div>
@@ -109,10 +121,10 @@ const CartPage = () => {
         <div className='summary-items'>
           {IIC?.length === 0 && (
             <div className='summary-empty'>
-              { !checkedOut && (
+              {!checkedOut && (
                 "Your Shopping Cart is Empty"
               )}
-              { checkedOut && (
+              {checkedOut && (
                 "You've Checked Out"
               )}
             </div>
@@ -129,14 +141,15 @@ const CartPage = () => {
         </div>
         <div className='cart-checkout'>
           <h3>{`Total: ${getTotal()}`}</h3>
-          { IIC.length > 0 && (
-            <>
-              <button onClick={handleCheckout}>Checkout</button>
-              <button onClick={handleClear}>Clear Cart</button>
-            </>
-          )}
+          <button onClick={handleCheckout}>Checkout</button>
+          <button onClick={handleClear}>Clear Cart</button>
         </div>
       </div>
+      <Popup open={open} onClick={toggleModal} onClose={toggleModal} modal>
+        <div id='emptyModal'>
+          <p>Your Cart is Empty Though...</p>
+        </div>
+      </Popup>
     </>
   )
 }
