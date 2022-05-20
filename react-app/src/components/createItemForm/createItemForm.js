@@ -16,7 +16,7 @@ const CreateItemForm = () => {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [pics, setPics] = useState('');
-  const defaultImage = 'https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg'
+  const defaultImage = 'https://res.cloudinary.com/dta9dkzbk/image/upload/v1653077550/no-image-available_pbgdnv.jpg'
   const [focusedImage, setFocusedImage] = useState(defaultImage);
   const [imageLoading, setImageLoading] = useState(false);
 
@@ -44,7 +44,7 @@ const CreateItemForm = () => {
       name,
       description,
       price: `${Number(price).toFixed(2)}`,
-      pics: pics || 'https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg'
+      pics: pics || 'https://res.cloudinary.com/dta9dkzbk/image/upload/v1653077550/no-image-available_pbgdnv.jpg'
     }
 
     const newest = await dispatch(newItem(item));

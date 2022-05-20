@@ -11,7 +11,7 @@ const EditItemForm = () => {
   const location = useLocation();
   const item = location.state;
   const user = useSelector(state => state.session.user)
-  const defaultImage = 'https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg'
+  const defaultImage = 'https://res.cloudinary.com/dta9dkzbk/image/upload/v1653077550/no-image-available_pbgdnv.jpg'
 
   const [errors, setErrors] = useState([]);
   const [name, setName] = useState(item.name);

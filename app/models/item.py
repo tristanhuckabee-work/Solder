@@ -18,7 +18,7 @@ class Item(db.Model):
   def to_dict(self):
     pictures = ['']
     if self.pics is None:
-      pictures = ['https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg']
+      pictures = ['https://res.cloudinary.com/dta9dkzbk/image/upload/v1653077550/no-image-available_pbgdnv.jpg']
     else:
       pictures = self.pics
 
