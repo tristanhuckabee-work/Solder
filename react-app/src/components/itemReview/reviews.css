@@ -30,6 +30,16 @@ form.review-form .review-input {
   justify-content: space-evenly;
   margin: 0;
 }
+.review-second {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+.review-second p {
+  color: var(--red);
+  text-align: center;
+  width: 100%;
+}
 .userStars {
   width: auto;
   padding: 0 10px 0 10px;
