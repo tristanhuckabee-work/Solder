@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
-
-import '../createItemForm/ItemForm.css';
 import { editItem } from '../../store/item';
+import Loader from './loader';
+import '../createItemForm/ItemForm.css';
 
 const EditItemForm = () => {
   const dispatch = useDispatch();
@@ -11,14 +11,15 @@ const EditItemForm = () => {
   const location = useLocation();
   const item = location.state;
   const user = useSelector(state => state.session.user)
-  const defaultImage = item.pics[0] || 'https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg'
+  const defaultImage = 'https://res.cloudinary.com/dzsgront4/image/upload/v1649267068/14efbdc4406830899f2620ebc9520789_tx5voz.jpg'
 
   const [errors, setErrors] = useState([]);
   const [name, setName] = useState(item.name);
   const [description, setDescription] = useState(item.description);
   const [price, setPrice] = useState(item.price.slice(1));
   const [pics, setPics] = useState(item.pics.join(','));
-  const [focusedImage, setFocusedImage] = useState(defaultImage)
+  const [focusedImage, setFocusedImage] = useState(item.pics[0]);
+  const [imageLoading, setImageLoading] = useState(false);
 
 
 
@@ -101,6 +102,7 @@ const EditItemForm = () => {
   const updateImages = async (e) => {
     e.preventDefault();
 
+    setImageLoading(true);
     let images = { ...e.target.files };
     let pictures = `${pics?.slice()}`;
     for (let i = 0; i < Object.keys(images).length; i++) {
@@ -118,11 +120,13 @@ const EditItemForm = () => {
     }
     setPics(pictures);
     setFocusedImage(pictures.split(',')[0]);
+    setImageLoading(false);
   }
   const clearImages = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setPics('')
+    setFocusedImage('https://res.cloudinary.com/dta9dkzbk/image/upload/v1653065218/images_w381gg.png')
   }
 
   const makeFocused = (e) => {
@@ -135,89 +139,94 @@ const EditItemForm = () => {
   if (!user) return <Redirect to='/' />
 
   return (
-    <div className='item-page'>
-      <div className='item-page-images-review'>
-        <div className='item-page-image-grid'>
-          <div className='images-on-deck'>
-            {pics?.split(',').map(picture => {
-              if (picture === '') {
-                return null;
-              } else {
-                return (
-                  <div
-                    key={picture}
-                    style={{ backgroundImage: `url(${picture})` }}
-                    className='item-page-image'
-                    onClick={makeFocused}
-                  ></div>
-                )
-              }
-            })}
-          </div>
-          <div className='item-page-focused-image'>
-            <div
-              style={{ backgroundImage: `url(${focusedImage})` }}
-              className='focused'
-            >
+    <>
+      <div className='item-page'>
+        <div className='item-page-images-review'>
+          <div className='item-page-image-grid'>
+            <div className='images-on-deck'>
+              {pics?.split(',').map(picture => {
+                if (picture === '') {
+                  return null;
+                } else {
+                  return (
+                    <div
+                      key={picture}
+                      style={{ backgroundImage: `url(${picture})` }}
+                      className='item-page-image'
+                      onClick={makeFocused}
+                    ></div>
+                  )
+                }
+              })}
+            </div>
+            <div className='item-page-focused-image'>
+              <div
+                style={{ backgroundImage: `url(${focusedImage})` }}
+                className='focused'
+              >
+              </div>
             </div>
           </div>
         </div>
+        <form onSubmit={onSubmit}>
+          <h2>Edit Your Item</h2>
+          <div className='errors'>
+            {errors.map((error, ind) => (
+              <div key={ind}>{error}</div>
+            ))}
+          </div>
+          <div>
+            <input
+              type='text'
+              name='name'
+              onChange={updateName}
+              value={name}
+              placeholder='Item Name'
+            ></input>
+          </div>
+          <div>
+            <textarea
+              name='description'
+              onChange={updateDescription}
+              value={description}
+              placeholder='Describe your Item here!'
+            ></textarea>
+          </div>
+          <div>
+            <input
+              type='text'
+              name='price'
+              onChange={updatePrice}
+              value={price}
+              placeholder='Price 000.00 - 999.99'
+            ></input>
+          </div>
+          <button onClick={clearImages}>Clear Images</button>
+          <div>
+            <input
+              type='file'
+              accept='image/*'
+              onChange={updateImages}
+              multiple
+            />
+          </div>
+          {(
+            !errors.length && (
+              <button type='submit'>Update Item</button>
+            )
+          )
+            ||
+            (
+              errors.length && (
+                <p className='invalid-form'>Please Correct Errors</p>
+              )
+            )}
+        </form>
       </div>
-      <form onSubmit={onSubmit}>
-        <h2>Edit Your Item</h2>
-        <div className='errors'>
-          {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
-          ))}
-        </div>
-        <div>
-          <input
-            type='text'
-            name='name'
-            onChange={updateName}
-            value={name}
-            placeholder='Item Name'
-          ></input>
-        </div>
-        <div>
-          <textarea
-            name='description'
-            onChange={updateDescription}
-            value={description}
-            placeholder='Describe your Item here!'
-          ></textarea>
-        </div>
-        <div>
-          <input
-            type='text'
-            name='price'
-            onChange={updatePrice}
-            value={price}
-            placeholder='Price 000.00 - 999.99'
-          ></input>
-        </div>
-        <button onClick={clearImages}>Clear Images</button>
-        <div>
-          <input
-            type='file'
-            accept='image/*'
-            onChange={updateImages}
-            multiple
-          />
-        </div>
-        {(
-          !errors.length && (
-            <button type='submit'>Update Item</button>
-          )
-        )
-        ||
-        (
-          errors.length && (
-            <p className='invalid-form'>Please Correct Errors</p>
-          )
-        )}
-      </form>
-    </div>
+      {imageLoading && (
+        <Loader />
+      )}
+    </>
   )
 }
 
