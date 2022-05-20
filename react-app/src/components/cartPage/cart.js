@@ -129,8 +129,12 @@ const CartPage = () => {
         </div>
         <div className='cart-checkout'>
           <h3>{`Total: ${getTotal()}`}</h3>
-          <button onClick={handleCheckout}>Checkout</button>
-          <button onClick={handleClear}>Clear Cart</button>
+          { IIC.length > 0 && (
+            <>
+              <button onClick={handleCheckout}>Checkout</button>
+              <button onClick={handleClear}>Clear Cart</button>
+            </>
+          )}
         </div>
       </div>
     </>

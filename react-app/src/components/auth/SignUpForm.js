@@ -24,7 +24,7 @@ const SignUpForm = () => {
     let invalidPic = /\.(jpg|png|jpeg)(\?.+)?$/.test(profile_pic)
 
     if (password !== repeatPassword) invalid.push('Passwords Must Match');
-    if ( !invalidPic ) invalid.push('Profile Pic must be a JPG, PNG, or JPEG');
+    if ( profile_pic !== '' && !invalidPic ) invalid.push('Profile Pic must be a JPG, PNG, or JPEG');
 
     if ( invalid.length ) {
       setErrors(invalid);
