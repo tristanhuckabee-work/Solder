@@ -18,6 +18,8 @@ const ItemPage = () => {
   const item = useSelector(state => state.items[item_id]);
   const seller = item?.seller;
 
+  if ( !seller ) history.push('/');
+
   const [focusedImage, setFocusedImage] = useState(item?.pics[0]);
   const [inCart, setInCart] = useState(false);
 
