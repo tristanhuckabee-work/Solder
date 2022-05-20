@@ -35,7 +35,7 @@ form.review-form .review-input {
   padding: 0 10px 0 10px;
 }
 .userStars i { cursor:pointer }
-.userStars .blank:hover { color: var(--yellow-op) }
+/* .userStars .blank:hover { color: var(--yellow-op) } */
 form.review-form button {
   align-self: flex-end;
   margin-right: 10px;

@@ -44,7 +44,7 @@ const ReviewForm = ({item}) => {
     await dispatch(newReview(review));
 
     setContent('');
-    setUserRating(5);
+    setUserRating(3);
   }
 
   return (
