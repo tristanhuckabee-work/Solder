@@ -21,11 +21,10 @@ const SignUpForm = () => {
     e.preventDefault();
 
     let invalid = [];
-    let extension = profile_pic.split('.');
-    const acceptable = 'jpg,png,jpeg';
+    let invalidPic = /\.(jpg|png|jpeg)(\?.+)?$/.test(profile_pic)
 
     if (password !== repeatPassword) invalid.push('Passwords Must Match');
-    if ( !acceptable.includes(extension[extension.length - 1]) && profile_pic !== '' ) invalid.push('Profile Pic must be a JPG, PNG, or JPEG');
+    if ( !invalidPic ) invalid.push('Profile Pic must be a JPG, PNG, or JPEG');
 
     if ( invalid.length ) {
       setErrors(invalid);
@@ -43,6 +42,9 @@ const SignUpForm = () => {
   const updateEmail = (e) => setEmail(e.target.value);
   const updatePassword = (e) => setPassword(e.target.value);
   const updateRepeatPassword = (e) => setRepeatPassword(e.target.value);
+  const checkImage = (url) => {
+    return /^.+\.(jpg|png|jpeg|webp)$/.test(url);
+  }
   const updateProfilePic = (e) => setProfilePic(e.target.value);
 
   if (user) {
@@ -63,7 +65,7 @@ const SignUpForm = () => {
           name='firstname'
           onChange={updateFirstName}
           value={firstName}
-          placeholder='First Name'
+          placeholder='First Name*'
         ></input>
       </div>
       <div>
@@ -72,7 +74,7 @@ const SignUpForm = () => {
           name='lastname'
           onChange={updateLastName}
           value={lastName}
-          placeholder='Last Name'
+          placeholder='Last Name*'
         ></input>
       </div>
       <div>
@@ -81,7 +83,7 @@ const SignUpForm = () => {
           name='email'
           onChange={updateEmail}
           value={email}
-          placeholder='eMail'
+          placeholder='eMail*'
         ></input>
       </div>
       <div>
@@ -91,7 +93,7 @@ const SignUpForm = () => {
           onChange={updatePassword}
           value={password}
           required={true}
-          placeholder='Password'
+          placeholder='Password*'
         ></input>
       </div>
       <div>
@@ -101,7 +103,7 @@ const SignUpForm = () => {
           onChange={updateRepeatPassword}
           value={repeatPassword}
           required={true}
-          placeholder='Repeat Password'
+          placeholder='Repeat Password*'
         ></input>
       </div>
       <div className='new-picture'>
@@ -110,11 +112,8 @@ const SignUpForm = () => {
           name='profile_pic'
           onChange={updateProfilePic}
           value={profile_pic}
-          placeholder='Profile Picture URL (Optional)'
+          placeholder='Profile Picture URL (JPG/PNG/JPEG)'
         ></input>
-        <div className='pic-preview'
-          style={{backgroundImage: `url(${profile_pic})`}}
-        />
       </div>
       <button type='submit'>Sign Up</button>
     </form>

@@ -61,25 +61,6 @@ form button:hover {
 }
 .logout:hover { color:var(--yellow) }
 
-.new-picture {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-.new-picture input {
-  width: 85%;
-}
-.pic-preview {
-  background-color: var(--black);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 50%;
-  height: 175px;
-  width: 175px;
-}
-
 
 @media screen and (max-width: 1000px) {
   form {
