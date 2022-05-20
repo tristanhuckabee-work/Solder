@@ -30,12 +30,22 @@ form.review-form .review-input {
   justify-content: space-evenly;
   margin: 0;
 }
+.review-second {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+.review-second p {
+  color: var(--red);
+  text-align: center;
+  width: 100%;
+}
 .userStars {
   width: auto;
   padding: 0 10px 0 10px;
 }
 .userStars i { cursor:pointer }
-.userStars .blank:hover { color: var(--yellow-op) }
+/* .userStars .blank:hover { color: var(--yellow-op) } */
 form.review-form button {
   align-self: flex-end;
   margin-right: 10px;
@@ -86,6 +96,10 @@ form.review-form button {
 .review-opts i:hover { color: var(--yellow-op) }
 .review-contents {
   width: calc(100% - 50px);
+}
+.review-contents p {
+  word-wrap: break-word;
+  word-break: break-all;
 }
 .review-head {
   align-items: center;

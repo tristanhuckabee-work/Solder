@@ -3,14 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { newReview } from '../../store/review';
 import './reviews.css';
 
-const ReviewForm = ({item}) => {
+const ReviewForm = ({ item }) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
 
+  const [errors, setErrors] = useState();
   const [content, setContent] = useState('');
   const [userRating, setUserRating] = useState(3);
 
-  const updateContent = (e) => setContent(e.target.value);
+  const updateContent = (e) => {
+    setContent(e.target.value);
+    if (content !== '') setErrors('');
+  }
   const updateRating = (e) => setUserRating(Number(e.target.id));
   const showUserStars = () => {
     const blankStars = 5 - userRating;
@@ -34,17 +38,21 @@ const ReviewForm = ({item}) => {
   const addReview = async (e) => {
     e.preventDefault()
 
-    const review = {
-      item_id: item.id,
-      user_id: user.id,
-      rating: userRating,
-      content
+    if (content === '') {
+      setErrors('A review must have content...')
+    } else {
+      const review = {
+        item_id: item.id,
+        user_id: user.id,
+        rating: userRating,
+        content
+      }
+
+      await dispatch(newReview(review));
+
+      setContent('');
+      setUserRating(3);
     }
-
-    await dispatch(newReview(review));
-
-    setContent('');
-    setUserRating(5);
   }
 
   return (
@@ -61,7 +69,12 @@ const ReviewForm = ({item}) => {
             />
             {showUserStars()}
           </div>
-          <button onClick={addReview}>Submit</button>
+          <div className='review-second'>
+            { errors && (
+              <p>{errors}</p>
+            )}
+            <button onClick={addReview}>Submit</button>
+          </div>
         </form>
       )}
     </>

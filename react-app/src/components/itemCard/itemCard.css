@@ -13,6 +13,11 @@
   align-items: center;
   justify-content: space-between;
 }
+.item-info > p {
+  max-width: 80%;
+  word-break: break-all;
+  word-wrap: break-word;
+}
 .item-card-img {
   width: 100%;
   height: 200px;

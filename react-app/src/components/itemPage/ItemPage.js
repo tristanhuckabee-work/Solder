@@ -13,17 +13,19 @@ const ItemPage = () => {
   const history = useHistory();
   const user = useSelector(state => state.session.user);
   const cart = useSelector(state => state.cart);
-  const IIC  = cart.items;
+  const IIC = cart.items;
   const item_id = window.location.pathname.split('/')[2];
   const item = useSelector(state => state.items[item_id]);
   const seller = item?.seller;
-  
+
+  if ( !seller ) history.push('/');
+
   const [focusedImage, setFocusedImage] = useState(item?.pics[0]);
   const [inCart, setInCart] = useState(false);
 
   useEffect(() => {
     (async () => {
-      await dispatch( getReviews(item_id) )
+      await dispatch(getReviews(item_id))
     })()
   }, [dispatch, item_id])
 
@@ -42,7 +44,7 @@ const ItemPage = () => {
     e.preventDefault();
     e.stopPropagation();
 
-    await dispatch( delItem( item.id ) )
+    await dispatch(delItem(item.id))
     history.push('/')
   }
   const updateItem = () => {
@@ -61,7 +63,7 @@ const ItemPage = () => {
       count: 1
     }
 
-    await dispatch( addToCart( ToAdd ) );
+    await dispatch(addToCart(ToAdd));
   }
   const removeItem = async (e) => {
     e.preventDefault();
@@ -73,12 +75,12 @@ const ItemPage = () => {
       count: 0
     }
 
-    await dispatch( changeItemCount( ToRemove ) );
+    await dispatch(changeItemCount(ToRemove));
   }
 
   useEffect(() => {
     setFocusedImage(item?.pics[0])
-    setInCart( checkIfInCart );
+    setInCart(checkIfInCart);
   }, [cart])
 
 
@@ -112,11 +114,11 @@ const ItemPage = () => {
         <div className='item-page-user-info'>
           <div>
             <div className='seller-pic'
-              style={{backgroundImage: `url(${seller?.profilePic})`}}
+              style={{ backgroundImage: `url(${seller?.profilePic})` }}
             ></div>
             <h3>{seller?.firstName} {seller?.lastName}</h3>
           </div>
-          { user && (
+          {user && (
             <>
               {seller?.id === user?.id && (
                 <div className='seller-options'>
@@ -141,13 +143,17 @@ const ItemPage = () => {
         <div className='item-page-item-info'>
           <h2>{item?.name}</h2>
           <h3>{item?.price}</h3>
-          { user && (
+          {user && (
             <>
-              { inCart && (
-                <button className='cart-add' onClick={removeItem}>Remove from Cart</button>
-              )}
-              { !inCart && (
-                <button className='cart-add' onClick={addItem}>Add to Cart</button>
+              {seller?.id !== user?.id && (
+                <>
+                  {inCart && (
+                    <button className='cart-add' onClick={removeItem}>Remove from Cart</button>
+                  )}
+                  {!inCart && (
+                    <button className='cart-add' onClick={addItem}>Add to Cart</button>
+                  )}
+                </>
               )}
             </>
           )}
@@ -156,7 +162,7 @@ const ItemPage = () => {
       </div>
 
       <div className='item-page-reviews'>
-        <Reviews item={item}/>
+        <Reviews item={item} />
       </div>
     </div>
   )

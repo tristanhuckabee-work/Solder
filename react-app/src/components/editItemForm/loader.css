@@ -1,0 +1,17 @@
+.loader {
+  align-items: center;
+  background-color: var(--black-op);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  position: absolute;
+  top:0;
+  width: 100vw;
+}
+.loader h2 {
+  background-color: var(--white);
+  border-radius: 5px;
+  padding: 10px 0;
+  text-align: center;
+  width: 200px;
+}
