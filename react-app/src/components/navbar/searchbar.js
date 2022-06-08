@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import Popup from 'reactjs-popup';
@@ -20,8 +20,6 @@ const SearchBar = () => {
   });
 
   const goToPage = (e) => {
-    console.log(val)
-    console.log(res)
     setValue('');
     setOpen(false);
     history.push(`/items/${e.target.id}`)
@@ -48,7 +46,7 @@ const SearchBar = () => {
         <input
           type='text'
           name='searchVal'
-          value={val}
+          value={val || ''}
           placeholder='Looking for Something?'
           onClick={toggleOpen}
           onChange={updateVal}
