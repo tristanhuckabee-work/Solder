@@ -7,10 +7,10 @@ const About = () => {
 
   return (
     <div className='about'>
-      <a href={li} target='_blank'>
+      <a href={li} target='_blank' rel="noreferrer">
         <i className='fab fa-linkedin fa-2x' />
       </a>
-      <a href={gh} target='_blank'>
+      <a href={gh} target='_blank' rel="noreferrer">
         <i className='fab fa-github-square fa-2x' />
       </a>
     </div>

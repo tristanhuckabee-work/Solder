@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { delItem } from '../../store/item';
 import { addToCart, changeItemCount } from '../../store/cart';
 import { getReviews } from '../../store/review';
@@ -11,6 +11,7 @@ import './ItemPage.css';
 const ItemPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation()
   const user = useSelector(state => state.session.user);
   const cart = useSelector(state => state.cart);
   const IIC = cart.items;
@@ -28,7 +29,9 @@ const ItemPage = () => {
       await dispatch(getReviews(item_id))
     })()
   }, [dispatch, item_id])
-
+  useEffect(() => {
+    setFocusedImage(item?.pics[0]);
+  }, [location])
   const checkIfInCart = () => {
     const ids = IIC?.map(item => item.item_id)
     return ids?.includes(item?.id)

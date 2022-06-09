@@ -7,6 +7,7 @@ import About from './about';
 import LoginForm from '../auth/LoginForm';
 import SignUpForm from '../auth/SignUpForm';
 import './NavBar.css'
+import SearchBar from './searchbar';
 
 const NavBar = () => {
   const user = useSelector(state => state.session.user);
@@ -16,6 +17,7 @@ const NavBar = () => {
       <header>
         <div>
           <NavLink to='/'>SOLDER</NavLink>
+          <SearchBar />
           <div className='login-signup'>
             <About />
             <Popup trigger={<button className='login'> Login </button>} modal><LoginForm /></Popup>
@@ -29,6 +31,7 @@ const NavBar = () => {
       <header>
         <div>
           <NavLink to='/' style={{ paddingRight: '15px' }}>Solder</NavLink>
+          <SearchBar />
           <div className='options'>
             <About />
             <UserInfo user={user} />

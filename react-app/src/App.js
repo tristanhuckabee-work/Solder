@@ -25,7 +25,6 @@ function App() {
     })();
     dispatch(getAllItems());
   }, [dispatch]);
-
   useEffect(() => {
     dispatch(getCartItems(user?.id))
   }, [user])
