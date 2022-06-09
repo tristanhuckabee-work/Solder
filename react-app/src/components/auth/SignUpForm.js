@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect, useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
@@ -42,9 +42,9 @@ const SignUpForm = () => {
   const updateEmail = (e) => setEmail(e.target.value);
   const updatePassword = (e) => setPassword(e.target.value);
   const updateRepeatPassword = (e) => setRepeatPassword(e.target.value);
-  const checkImage = (url) => {
-    return /^.+\.(jpg|png|jpeg|webp)$/.test(url);
-  }
+  // const checkImage = (url) => {
+  //   return /^.+\.(jpg|png|jpeg|webp)$/.test(url);
+  // }
   const updateProfilePic = (e) => setProfilePic(e.target.value);
 
   if (user) {

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Popup from "reactjs-popup";
 import LogoutButton from "../auth/LogoutButton";
-import About from "./about";
 
 const UserInfo = ({ user }) => {
   const [open, setOpen] = useState(false);

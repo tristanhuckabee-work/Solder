@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink, useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import './NavBar.css'
 
@@ -9,6 +9,7 @@ const SearchBar = () => {
   const items = useSelector( state => state.items.items);
   const [open, setOpen] = useState(false);
   const [val, setValue] = useState('')
+
   let res = items.filter(item => {
     if (val) {
       if (item.name.toLowerCase().includes(val.toLowerCase())) {
@@ -16,13 +17,15 @@ const SearchBar = () => {
       } else {
         return false;
       }
+    } else {
+      return false;
     }
   });
 
   const goToPage = (e) => {
     setValue('');
     setOpen(false);
-    history.push(`/items/${e.target.id}`)
+    history.push({pathname:`/items/${e.target.id}`, state:e.target.id});
   }
   const toggleOpen = () => setOpen(!open);
   const updateVal = (e) => setValue(e.target.value);
@@ -42,7 +45,7 @@ const SearchBar = () => {
   return (
     <>
       <div className='search-bar'>
-        <i className='fas fa-magnifying-glass fa-2x' />
+        <i className='fas fa-magnifying-glass' />
         <input
           type='text'
           name='searchVal'
